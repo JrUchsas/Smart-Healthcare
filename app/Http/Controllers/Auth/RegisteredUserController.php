@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -40,7 +42,14 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'user_type' => 'patient',
+            'is_active' => true,
         ]);
+
+        // Ensure Spatie Role exists before assigning
+        Role::firstOrCreate(['name' => 'Patient', 'guard_name' => 'web']);
+        $user->assignRole('Patient');
+        Patient::firstOrCreate(['user_id' => $user->id]);
 
         event(new Registered($user));
 

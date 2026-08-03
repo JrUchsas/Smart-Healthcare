@@ -14,11 +14,11 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminUser = User::firstOrCreate(
+        $adminUser = User::updateOrCreate(
             ['email' => 'admin@smarthealthcare.com'],
             [
                 'name' => 'System Administrator',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('admin12345'),
                 'user_type' => 'admin',
                 'is_active' => true,
                 'email_verified_at' => now(),
