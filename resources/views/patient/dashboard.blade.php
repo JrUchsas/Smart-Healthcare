@@ -3,34 +3,6 @@
 @section('title', 'Patient Dashboard')
 @section('page_title', 'Patient Portal & Health Overview')
 
-@section('sidebar_menu')
-    <li class="nav-item">
-        <a class="nav-link active" href="{{ route('patient.dashboard') }}">
-            <i class="bi bi-speedometer2"></i> Dashboard
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-calendar-event"></i> My Appointments
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-file-earmark-medical"></i> Prescriptions
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-receipt"></i> Invoices & Payments
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('profile.edit') }}">
-            <i class="bi bi-person-gear"></i> Profile Management
-        </a>
-    </li>
-@endsection
-
 @section('content')
     <!-- Patient Summary Cards -->
     <div class="row g-3 mb-4">

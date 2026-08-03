@@ -53,6 +53,13 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('specializations', SpecializationController::class);
 });
 
+use App\Http\Controllers\Doctor\DoctorScheduleController;
+
+// Doctor Schedules Routes (Accessible to Admin, Doctor, and Patient)
+Route::middleware(['auth', 'role:Admin|Doctor|Patient'])->prefix('doctor')->name('doctor.')->group(function () {
+    Route::resource('schedules', DoctorScheduleController::class);
+});
+
 // Doctor Routes Group
 Route::middleware(['auth', 'role:Doctor'])->prefix('doctor')->name('doctor.')->group(function () {
     Route::get('/dashboard', [DoctorDashboardController::class, 'index'])->name('dashboard');

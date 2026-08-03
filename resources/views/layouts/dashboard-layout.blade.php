@@ -65,7 +65,7 @@
                 </div>
                 <hr class="text-secondary mb-4">
                 <ul class="nav flex-column">
-                    @yield('sidebar_menu')
+                    @include('layouts.navigation-sidebar')
                 </ul>
             </nav>
 

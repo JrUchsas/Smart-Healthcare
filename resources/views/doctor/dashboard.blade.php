@@ -3,29 +3,6 @@
 @section('title', 'Doctor Dashboard')
 @section('page_title', 'Doctor Portal & Practice Overview')
 
-@section('sidebar_menu')
-    <li class="nav-item">
-        <a class="nav-link active" href="{{ route('doctor.dashboard') }}">
-            <i class="bi bi-speedometer2"></i> Dashboard
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-calendar-day"></i> Today's Schedule
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-journal-medical"></i> Patient History
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-wallet2"></i> Earnings Summary
-        </a>
-    </li>
-@endsection
-
 @section('content')
     <!-- Statistics Overview -->
     <div class="row g-3 mb-4">
