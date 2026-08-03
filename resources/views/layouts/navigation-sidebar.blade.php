@@ -118,13 +118,13 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('patient.doctors.*') || request()->routeIs('patient.appointments.*') ? 'active' : '' }}" href="{{ route('patient.doctors.search') }}">
-            <i class="bi bi-search me-1"></i> Find Doctors & Book
+        <a class="nav-link {{ request()->routeIs('patient.doctors.*') || request()->routeIs('patient.appointments.create') ? 'active' : '' }}" href="{{ route('patient.doctors.search') }}">
+            <i class="bi bi-search me-1"></i> Find Doctor Appointment
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-clock-history"></i> Appointment History
+        <a class="nav-link {{ request()->routeIs('patient.appointments.index') || request()->routeIs('patient.appointments.edit') ? 'active' : '' }}" href="{{ route('patient.appointments.index') }}">
+            <i class="bi bi-clock-history"></i> My Booked Appointment
         </a>
     </li>
     <li class="nav-item">

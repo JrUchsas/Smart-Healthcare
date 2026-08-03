@@ -71,6 +71,7 @@ Route::middleware(['auth', 'role:Doctor'])->prefix('doctor')->name('doctor.')->g
 
 use App\Http\Controllers\Patient\AppointmentBookingController;
 use App\Http\Controllers\Patient\DoctorSearchController;
+use App\Http\Controllers\Patient\PatientAppointmentController;
 
 // Patient Routes Group
 Route::middleware(['auth', 'role:Patient'])->prefix('patient')->name('patient.')->group(function () {
@@ -79,6 +80,12 @@ Route::middleware(['auth', 'role:Patient'])->prefix('patient')->name('patient.')
     Route::get('/doctors/{doctor}/slots', [DoctorSearchController::class, 'getSlots'])->name('doctors.slots');
     Route::get('/doctors/{doctor}/book', [AppointmentBookingController::class, 'create'])->name('appointments.create');
     Route::post('/appointments', [AppointmentBookingController::class, 'store'])->name('appointments.store');
+    Route::resource('my-appointments', PatientAppointmentController::class)->except(['create', 'store'])->parameters(['my-appointments' => 'appointment'])->names([
+        'index' => 'appointments.index',
+        'edit' => 'appointments.edit',
+        'update' => 'appointments.update',
+        'destroy' => 'appointments.destroy',
+    ]);
 });
 
 Route::middleware('auth')->group(function () {
