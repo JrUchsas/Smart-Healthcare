@@ -72,9 +72,6 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link active" href="{{ url('/') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#features">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#departments">Departments</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">About System</a></li>
                 </ul>
                 <div class="d-flex align-items-center gap-2">
                     @if (Route::has('login'))
@@ -127,97 +124,6 @@
                         <i class="bi bi-hospital text-info display-1 d-block mb-3"></i>
                         <h4 class="text-white fw-bold mb-2">24/7 Digital Health Portal</h4>
                         <p class="text-light opacity-75 small mb-0">Seamless experience for Patients, Doctors, and Hospital Administrators.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Key Services Section -->
-    <section id="features" class="py-5">
-        <div class="container py-4">
-            <div class="text-center mb-5">
-                <span class="text-primary fw-bold text-uppercase small">Core System Features</span>
-                <h2 class="fw-bold mt-1">Healthcare Solutions Tailored For You</h2>
-            </div>
-
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card feature-card h-100 p-4 bg-white shadow-sm">
-                        <div class="icon-box bg-primary bg-opacity-10 text-primary mb-3">
-                            <i class="bi bi-calendar-event fs-3"></i>
-                        </div>
-                        <h5 class="fw-bold">Online Doctor Appointments</h5>
-                        <p class="text-muted mb-0">Browse specialist doctors, check real-time availability, and book appointments effortlessly.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card feature-card h-100 p-4 bg-white shadow-sm">
-                        <div class="icon-box bg-success bg-opacity-10 text-success mb-3">
-                            <i class="bi bi-file-earmark-medical fs-3"></i>
-                        </div>
-                        <h5 class="fw-bold">Digital Prescriptions & Reports</h5>
-                        <p class="text-muted mb-0">Access your medical history, diagnosis logs, and download PDF prescriptions securely.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card feature-card h-100 p-4 bg-white shadow-sm">
-                        <div class="icon-box bg-warning bg-opacity-10 text-warning mb-3">
-                            <i class="bi bi-shield-lock fs-3"></i>
-                        </div>
-                        <h5 class="fw-bold">Role-Based Secure Access</h5>
-                        <p class="text-muted mb-0">Dedicated portal dashboards for Admin, Doctors, and Patients backed by Spatie RBAC security.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Departments Section -->
-    <section id="departments" class="bg-white py-5">
-        <div class="container py-4">
-            <div class="text-center mb-5">
-                <span class="text-primary fw-bold text-uppercase small">Specialized Care</span>
-                <h2 class="fw-bold mt-1">Medical Departments</h2>
-            </div>
-
-            <div class="row g-3">
-                <div class="col-md-2 col-6">
-                    <div class="p-3 text-center border rounded-3 bg-light">
-                        <i class="bi bi-heart-pulse text-danger fs-2 d-block mb-2"></i>
-                        <h6 class="fw-bold mb-0">Cardiology</h6>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6">
-                    <div class="p-3 text-center border rounded-3 bg-light">
-                        <i class="bi bi-cpu text-info fs-2 d-block mb-2"></i>
-                        <h6 class="fw-bold mb-0">Neurology</h6>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6">
-                    <div class="p-3 text-center border rounded-3 bg-light">
-                        <i class="bi bi-emoji-smile text-warning fs-2 d-block mb-2"></i>
-                        <h6 class="fw-bold mb-0">Pediatrics</h6>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6">
-                    <div class="p-3 text-center border rounded-3 bg-light">
-                        <i class="bi bi-bandaid text-primary fs-2 d-block mb-2"></i>
-                        <h6 class="fw-bold mb-0">Orthopedics</h6>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6">
-                    <div class="p-3 text-center border rounded-3 bg-light">
-                        <i class="bi bi-eye text-success fs-2 d-block mb-2"></i>
-                        <h6 class="fw-bold mb-0">Ophthalmology</h6>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6">
-                    <div class="p-3 text-center border rounded-3 bg-light">
-                        <i class="bi bi-hospital text-secondary fs-2 d-block mb-2"></i>
-                        <h6 class="fw-bold mb-0">General Care</h6>
                     </div>
                 </div>
             </div>
