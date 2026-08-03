@@ -46,11 +46,15 @@ Route::get('/dashboard', function (Request $request) {
     return redirect()->route('patient.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+use App\Http\Controllers\Admin\DoctorManagementController;
+
 // Admin Routes Group
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('departments', DepartmentController::class);
     Route::resource('specializations', SpecializationController::class);
+    Route::resource('doctors', DoctorManagementController::class)->only(['index', 'edit', 'update']);
+    Route::get('/departments/{department}/specializations', [DoctorManagementController::class, 'getSpecializations'])->name('departments.specializations');
 });
 
 use App\Http\Controllers\Doctor\DoctorScheduleController;
@@ -65,9 +69,16 @@ Route::middleware(['auth', 'role:Doctor'])->prefix('doctor')->name('doctor.')->g
     Route::get('/dashboard', [DoctorDashboardController::class, 'index'])->name('dashboard');
 });
 
+use App\Http\Controllers\Patient\AppointmentBookingController;
+use App\Http\Controllers\Patient\DoctorSearchController;
+
 // Patient Routes Group
 Route::middleware(['auth', 'role:Patient'])->prefix('patient')->name('patient.')->group(function () {
     Route::get('/dashboard', [PatientDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/doctors/search', [DoctorSearchController::class, 'index'])->name('doctors.search');
+    Route::get('/doctors/{doctor}/slots', [DoctorSearchController::class, 'getSlots'])->name('doctors.slots');
+    Route::get('/doctors/{doctor}/book', [AppointmentBookingController::class, 'create'])->name('appointments.create');
+    Route::post('/appointments', [AppointmentBookingController::class, 'store'])->name('appointments.store');
 });
 
 Route::middleware('auth')->group(function () {

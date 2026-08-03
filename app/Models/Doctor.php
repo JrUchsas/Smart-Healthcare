@@ -81,4 +81,12 @@ class Doctor extends Model
     {
         return $this->hasMany(AppointmentSlot::class);
     }
+
+    /**
+     * Get all appointments for this doctor.
+     */
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

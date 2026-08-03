@@ -39,10 +39,30 @@
         </div>
     </li>
 
+    {{-- Doctors Dropdown --}}
     <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('doctor.schedules.*') ? 'active' : '' }}" href="{{ route('doctor.schedules.index') }}">
-            <i class="bi bi-calendar-range"></i> Doctor Schedules
+        <a class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('admin.doctors.*') || request()->routeIs('doctor.schedules.*') ? 'active' : '' }}" 
+           href="#doctorsSubmenu" 
+           data-bs-toggle="collapse" 
+           role="button"
+           aria-expanded="{{ request()->routeIs('admin.doctors.*') || request()->routeIs('doctor.schedules.*') ? 'true' : 'false' }}">
+            <span><i class="bi bi-person-badge me-2"></i> Doctors</span>
+            <i class="bi bi-chevron-down small"></i>
         </a>
+        <div class="collapse {{ request()->routeIs('admin.doctors.*') || request()->routeIs('doctor.schedules.*') ? 'show' : '' }}" id="doctorsSubmenu">
+            <ul class="nav flex-column ms-3 mt-1">
+                <li class="nav-item">
+                    <a class="nav-link py-1.5 px-3 {{ request()->routeIs('admin.doctors.*') ? 'active' : '' }}" href="{{ route('admin.doctors.index') }}">
+                        <i class="bi bi-people me-2"></i> All Doctors
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link py-1.5 px-3 {{ request()->routeIs('doctor.schedules.*') ? 'active' : '' }}" href="{{ route('doctor.schedules.index') }}">
+                        <i class="bi bi-calendar-range me-2"></i> Doctor Schedules
+                    </a>
+                </li>
+            </ul>
+        </div>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">
@@ -98,8 +118,8 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('doctor.schedules.*') ? 'active' : '' }}" href="{{ route('doctor.schedules.index') }}">
-            <i class="bi bi-calendar-event"></i> Doctor Schedules & Booking
+        <a class="nav-link {{ request()->routeIs('patient.doctors.*') || request()->routeIs('patient.appointments.*') ? 'active' : '' }}" href="{{ route('patient.doctors.search') }}">
+            <i class="bi bi-search me-1"></i> Find Doctors & Book
         </a>
     </li>
     <li class="nav-item">

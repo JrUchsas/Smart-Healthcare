@@ -30,7 +30,7 @@
                             <option value="">-- Choose Doctor --</option>
                             @foreach($doctors as $doc)
                                 <option value="{{ $doc->id }}" {{ old('doctor_id') == $doc->id ? 'selected' : '' }}>
-                                    Dr. {{ $doc->user?->name ?? 'Doctor #'.$doc->id }}
+                                    {{ \Illuminate\Support\Str::startsWith($doc->user?->name, 'Dr.') ? $doc->user?->name : 'Dr. '.$doc->user?->name }}
                                 </option>
                             @endforeach
                         </select>

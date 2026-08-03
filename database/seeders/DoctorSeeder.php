@@ -44,7 +44,7 @@ class DoctorSeeder extends Seeder
         $doctorUser = User::updateOrCreate(
             ['email' => 'doctor@smarthealthcare.com'],
             [
-                'name' => 'Dr. Sarah Jenkins',
+                'name' => 'Sarah Jenkins',
                 'password' => Hash::make('doctor12345'),
                 'user_type' => 'doctor',
                 'is_active' => true,

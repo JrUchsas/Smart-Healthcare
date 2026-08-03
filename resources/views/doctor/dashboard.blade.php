@@ -4,6 +4,16 @@
 @section('page_title', 'Doctor Portal & Practice Overview')
 
 @section('content')
+    @if(isset($doctor) && (! $doctor->is_available || ! auth()->user()->is_active))
+        <div class="alert alert-warning d-flex align-items-center mb-4 p-3 shadow-sm border-warning" role="alert">
+            <i class="bi bi-exclamation-triangle-fill fs-3 me-3 text-warning"></i>
+            <div>
+                <h6 class="fw-bold mb-1">Account Pending Administrator Verification</h6>
+                <p class="mb-0 small">Your doctor account registration is currently pending verification and department assignment by the hospital administrator. You will be able to manage patient consultation slots once your credentials have been verified.</p>
+            </div>
+        </div>
+    @endif
+
     <!-- Statistics Overview -->
     <div class="row g-3 mb-4">
         <div class="col-md-3">

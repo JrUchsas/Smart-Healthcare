@@ -84,11 +84,11 @@
                             </a>
                         @else
                             <a href="{{ route('login') }}" class="btn btn-outline-light px-4 rounded-pill">
-                                <i class="bi bi-box-arrow-in-right me-1"></i> Log in
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
                             </a>
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}" class="btn btn-gradient px-4 rounded-pill">
-                                    <i class="bi bi-person-plus me-1"></i> Register Patient
+                                    <i class="bi bi-person-plus me-1"></i> Register
                                 </a>
                             @endif
                         @endauth
@@ -118,9 +118,6 @@
                         @else
                             <a href="{{ route('register') }}" class="btn btn-gradient btn-lg px-4 rounded-pill">
                                 <i class="bi bi-calendar-check me-2"></i> Book Appointment Now
-                            </a>
-                            <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg px-4 rounded-pill">
-                                <i class="bi bi-person-lock me-2"></i> Doctor / Admin Login
                             </a>
                         @endauth
                     </div>

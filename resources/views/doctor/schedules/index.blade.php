@@ -37,7 +37,7 @@
                                             <div>
                                                 <h6 class="mb-0 fw-bold text-dark">
                                                     @if(isset($schedule->doctor->user))
-                                                        <span class="badge bg-primary me-2"><i class="bi bi-person-badge me-1"></i>Dr. {{ $schedule->doctor->user->name }}</span>
+                                                        <span class="badge bg-primary me-2"><i class="bi bi-person-badge me-1"></i>{{ \Illuminate\Support\Str::startsWith($schedule->doctor->user->name, 'Dr.') ? $schedule->doctor->user->name : 'Dr. '.$schedule->doctor->user->name }}</span>
                                                     @endif
                                                     {{ $schedule->schedule_date->format('l, F j, Y') }}
                                                 </h6>
