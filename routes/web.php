@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\SpecializationController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\DoctorDashboardController;
 use App\Http\Controllers\PatientDashboardController;
@@ -47,6 +49,8 @@ Route::get('/dashboard', function (Request $request) {
 // Admin Routes Group
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('departments', DepartmentController::class);
+    Route::resource('specializations', SpecializationController::class);
 });
 
 // Doctor Routes Group
