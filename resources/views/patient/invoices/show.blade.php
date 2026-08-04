@@ -26,7 +26,7 @@
                         <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
                             <h6 class="text-uppercase text-muted fw-bold small">Invoice Details:</h6>
                             <p class="mb-1"><strong>Invoice #:</strong> <span class="font-monospace text-primary fw-bold">{{ $invoice->invoice_number }}</span></p>
-                            <p class="mb-1"><strong>Payment Date:</strong> {{ $invoice->issued_at ? $invoice->issued_at->format('F j, Y h:i A') : now()->format('F j, Y') }}</p>
+                            <p class="mb-1"><strong>Payment Date:</strong> {{ $invoice->issued_at ? $invoice->issued_at->format('d M Y, h:i A') : now()->format('d M Y') }}</p>
                             <p class="mb-0"><strong>Payment Method:</strong> <span class="text-capitalize">{{ str_replace('_', ' ', $invoice->payment?->payment_method ?? 'credit_card') }}</span></p>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                             </div>
                             <div class="col-md-6">
                                 <p class="mb-1"><strong>Appointment Reference:</strong> #{{ $invoice->appointment?->appointment_number }}</p>
-                                <p class="mb-0"><strong>Scheduled Date:</strong> {{ $invoice->appointment?->appointment_date ? $invoice->appointment?->appointment_date->format('M j, Y') : 'N/A' }}</p>
+                                <p class="mb-0"><strong>Scheduled Date:</strong> {{ $invoice->appointment?->appointment_date ? $invoice->appointment?->appointment_date->format('d M Y') : 'N/A' }}</p>
                             </div>
                         </div>
                     </div>

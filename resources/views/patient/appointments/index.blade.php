@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-layout')
 
-@section('title', $pageTitle)
-@section('page_title', $pageTitle)
+@section('title', 'My Appointments')
+@section('page_title', 'My Appointments')
 
 @section('content')
 <div class="container-fluid px-0">

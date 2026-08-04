@@ -64,6 +64,20 @@
             </ul>
         </div>
     </li>
+
+    {{-- Appointment History --}}
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.appointments.*') ? 'active' : '' }}" href="{{ route('admin.appointments.index') }}">
+            <i class="bi bi-clock-history me-2"></i> Appointment History
+        </a>
+    </li>
+
+    {{-- Revenue Reports --}}
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.reports.revenue') ? 'active' : '' }}" href="{{ route('admin.reports.revenue') }}">
+            <i class="bi bi-graph-up-arrow me-2"></i> Revenue Reports
+        </a>
+    </li>
 @endif
 
 {{-- Doctor Sidebar Menu --}}

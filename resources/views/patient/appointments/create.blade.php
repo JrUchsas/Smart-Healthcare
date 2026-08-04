@@ -68,7 +68,7 @@
                                     <div class="mb-3 border rounded p-3 bg-light">
                                         <h6 class="fw-bold mb-2 text-dark">
                                             <i class="bi bi-calendar-check text-primary me-1"></i>
-                                            {{ \Carbon\Carbon::parse($date)->format('l, F j, Y') }}
+                                            {{ \Carbon\Carbon::parse($date)->format('l, d M Y') }}
                                         </h6>
                                         <div class="d-flex flex-wrap gap-2">
                                             @foreach($slots as $slot)
@@ -78,7 +78,7 @@
                                                            name="appointment_slot_id" 
                                                            id="slot-{{ $slot->id }}" 
                                                            value="{{ $slot->id }}" 
-                                                           data-date="{{ \Carbon\Carbon::parse($date)->format('l, F j, Y') }}"
+                                                           data-date="{{ \Carbon\Carbon::parse($date)->format('l, d M Y') }}"
                                                            data-time="{{ \Carbon\Carbon::parse($slot->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($slot->end_time)->format('h:i A') }}"
                                                            required>
                                                     <label class="btn btn-outline-primary btn-sm px-3 py-2 fw-semibold" for="slot-{{ $slot->id }}">

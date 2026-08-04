@@ -46,6 +46,8 @@ Route::get('/dashboard', function (Request $request) {
     return redirect()->route('patient.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+use App\Http\Controllers\Admin\AdminAppointmentController;
+use App\Http\Controllers\Admin\AdminRevenueReportController;
 use App\Http\Controllers\Admin\DoctorManagementController;
 
 // Admin Routes Group
@@ -55,6 +57,13 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('specializations', SpecializationController::class);
     Route::resource('doctors', DoctorManagementController::class)->only(['index', 'edit', 'update']);
     Route::get('/departments/{department}/specializations', [DoctorManagementController::class, 'getSpecializations'])->name('departments.specializations');
+
+    // Appointment History Routes
+    Route::get('/appointments', [AdminAppointmentController::class, 'index'])->name('appointments.index');
+    Route::get('/appointments/{appointment}', [AdminAppointmentController::class, 'show'])->name('appointments.show');
+
+    // Revenue & Financial Reports Route
+    Route::get('/reports/revenue', [AdminRevenueReportController::class, 'index'])->name('reports.revenue');
 });
 
 use App\Http\Controllers\Doctor\DoctorScheduleController;

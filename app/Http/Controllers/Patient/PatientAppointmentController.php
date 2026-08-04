@@ -37,8 +37,8 @@ class PatientAppointmentController extends Controller
             $appointments = $patient->appointments()
                 ->with(['doctor.user', 'doctor.department', 'doctor.specialization', 'slot', 'invoice', 'prescription'])
                 ->whereIn('status', ['pending', 'confirmed'])
-                ->orderBy('appointment_date', 'desc')
-                ->orderBy('id', 'desc')
+                ->orderBy('appointment_date', 'asc')
+                ->orderBy('id', 'asc')
                 ->paginate(10);
         }
 
@@ -60,9 +60,14 @@ class PatientAppointmentController extends Controller
             ->where('is_booked', false)
             ->where('status', 'available')
             ->get()
+            ->sortBy([
+                fn ($a, $b) => optional($a->schedule)->schedule_date <=> optional($b->schedule)->schedule_date,
+                fn ($a, $b) => $a->start_time <=> $b->start_time,
+            ])
             ->groupBy(function ($slot) {
                 return $slot->schedule ? $slot->schedule->schedule_date->format('Y-m-d') : 'Other';
-            });
+            })
+            ->sortKeys();
 
         return view('patient.appointments.edit', compact('appointment', 'availableSlots'));
     }

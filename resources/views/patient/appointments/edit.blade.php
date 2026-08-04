@@ -23,7 +23,7 @@
                         <p class="mb-1"><strong>Doctor:</strong> {{ \Illuminate\Support\Str::startsWith($appointment->doctor?->user?->name, 'Dr.') ? $appointment->doctor?->user?->name : 'Dr. '.$appointment->doctor?->user?->name }} ({{ $appointment->doctor?->department?->name ?? 'General Medical' }})</p>
                         <p class="mb-0 small text-muted">
                             <strong>Current Slot:</strong> 
-                            <i class="bi bi-calendar3 ms-1 me-1"></i> {{ $appointment->appointment_date ? $appointment->appointment_date->format('l, F j, Y') : 'N/A' }}
+                            <i class="bi bi-calendar3 ms-1 me-1"></i> {{ $appointment->appointment_date ? $appointment->appointment_date->format('l, d M Y') : 'N/A' }}
                             @if($appointment->slot)
                                 | <i class="bi bi-clock me-1"></i> {{ \Carbon\Carbon::parse($appointment->slot->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($appointment->slot->end_time)->format('h:i A') }}
                             @endif
@@ -49,7 +49,7 @@
                                         <div class="mb-3">
                                             <h6 class="fw-bold small text-dark mb-2">
                                                 <i class="bi bi-calendar-check text-primary me-1"></i>
-                                                {{ \Carbon\Carbon::parse($date)->format('l, F j, Y') }}
+                                                {{ \Carbon\Carbon::parse($date)->format('l, d M Y') }}
                                             </h6>
                                             <div class="d-flex flex-wrap gap-2">
                                                 @foreach($slots as $slot)

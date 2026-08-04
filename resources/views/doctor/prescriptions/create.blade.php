@@ -1,6 +1,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('title', 'Prescription Builder')
+@section('page_title', 'Prescription Builder')
 
 @section('content')
 <div class="container-fluid px-4 py-4">
@@ -12,7 +13,7 @@
             <small class="text-muted">
                 Patient: <strong>{{ $appointment->patient?->user?->name ?? 'N/A' }}</strong>
                 &mdash; Appointment: <strong>{{ $appointment->appointment_number }}</strong>
-                &mdash; Date: <strong>{{ $appointment->appointment_date?->format('M j, Y') }}</strong>
+                &mdash; Date: <strong>{{ $appointment->appointment_date?->format('d M Y') }}</strong>
             </small>
         </div>
         <a href="{{ route('doctor.dashboard') }}" class="btn btn-outline-secondary btn-sm">
@@ -69,7 +70,7 @@
                             <label for="follow_up_date" class="form-label fw-semibold">Follow-Up Date</label>
                             <input type="date" id="follow_up_date" name="follow_up_date"
                                 class="form-control @error('follow_up_date') is-invalid @enderror"
-                                value="{{ old('follow_up_date') }}" min="{{ date('Y-m-d', strtotime('+1 day')) }}">
+                                value="{{ old('follow_up_date') }}" min="{{ date('Y-m-d') }}">
                             @error('follow_up_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 

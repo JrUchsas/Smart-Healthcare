@@ -1,6 +1,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('title', 'Prescription – ' . $prescription->prescription_number)
+@section('page_title', 'Prescription Details')
 
 @section('content')
 <div class="container-fluid px-4 py-4">

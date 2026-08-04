@@ -7,10 +7,7 @@
 <div class="container-fluid px-0">
 
     <div class="d-flex align-items-center justify-content-between mb-4">
-        <div>
-            <h1 class="h4 fw-bold mb-1"><i class="bi bi-check-all me-2 text-success"></i>Completed Consultations</h1>
-            <small class="text-muted">All consultations where a prescription has been issued.</small>
-        </div>
+        <span class="text-muted">All consultations where a prescription has been issued.</span>
         <a href="{{ route('doctor.dashboard') }}" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
         </a>

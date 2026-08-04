@@ -80,7 +80,7 @@
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                     <h6 class="mb-0 fw-bold"><i class="bi bi-clock-history me-2 text-primary"></i>Today's Consultation Schedule</h6>
-                    <span class="badge bg-primary-subtle text-primary border">{{ now()->format('l, M j, Y') }}</span>
+                    <span class="badge bg-primary-subtle text-primary border">{{ now()->format('l, d M Y') }}</span>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
@@ -148,21 +148,107 @@
             </div>
         </div>
 
-        <!-- Practice Schedule Management Link -->
+        <!-- Upcoming Practice Shifts & Schedule Controls -->
         <div class="col-lg-5">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0 fw-bold"><i class="bi bi-calendar3 me-2 text-info"></i>Practice Schedule Controls</h6>
-                </div>
-                <div class="card-body text-center p-4">
-                    <i class="bi bi-calendar-range text-info display-4 d-block mb-3"></i>
-                    <h5 class="fw-bold mb-2">Shift & Availability Manager</h5>
-                    <p class="text-muted small mb-4">Set up consultation dates, start/end shift hours, and auto-generate 15/30/45/60 min appointment slots.</p>
-                    <a href="{{ route('doctor.schedules.index') }}" class="btn btn-info text-white px-4">
-                        <i class="bi bi-gear-fill me-1"></i> Manage Schedules & Slots
+                    <h6 class="mb-0 fw-bold"><i class="bi bi-calendar3 me-2 text-primary"></i>Upcoming Practice Shifts</h6>
+                    <a href="{{ route('doctor.schedules.create') }}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-plus-lg me-1"></i> Add Shift
                     </a>
+                </div>
+                <div class="card-body p-3">
+                    @if($upcomingSchedules->isEmpty())
+                        <div class="text-center py-4">
+                            <i class="bi bi-calendar-x text-muted fs-2 d-block mb-2"></i>
+                            <p class="text-muted small mb-3">No upcoming schedule shifts set up.</p>
+                            <a href="{{ route('doctor.schedules.create') }}" class="btn btn-outline-primary btn-sm">
+                                Create Practice Shift
+                            </a>
+                        </div>
+                    @else
+                        <div class="list-group list-group-flush mb-3">
+                            @foreach($upcomingSchedules as $sched)
+                                <div class="list-group-item px-0 py-2 d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <div class="fw-semibold text-dark">
+                                            <i class="bi bi-calendar-event text-primary me-1"></i>
+                                            {{ $sched->schedule_date?->format('d M Y') }}
+                                        </div>
+                                        <small class="text-muted">
+                                            <i class="bi bi-clock me-1"></i>
+                                            {{ \Carbon\Carbon::parse($sched->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($sched->end_time)->format('h:i A') }}
+                                        </small>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="badge bg-primary-subtle text-primary border">
+                                            {{ $sched->booked_slots }} / {{ $sched->total_slots }} Booked
+                                        </span>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    <div class="border-top pt-3 mt-2 d-flex gap-2">
+                        <a href="{{ route('doctor.schedules.index') }}" class="btn btn-outline-primary btn-sm flex-fill">
+                            <i class="bi bi-calendar-range me-1"></i> View All Shifts
+                        </a>
+                        <a href="{{ route('doctor.consultations.completed') }}" class="btn btn-outline-success btn-sm flex-fill">
+                            <i class="bi bi-check-all me-1"></i> History
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Practice Calendar Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-0 fw-bold"><i class="bi bi-calendar-week me-2 text-primary"></i>Live Practice Schedule Calendar</h6>
+                        <small class="text-muted">Interactive monthly view showing scheduled shifts and live slot booking status.</small>
+                    </div>
+                    <div class="d-flex gap-2 align-items-center flex-wrap">
+                        <span class="badge bg-primary me-1"><i class="bi bi-circle-fill me-1 small"></i> Available Shift</span>
+                        <span class="badge bg-success me-2"><i class="bi bi-circle-fill me-1 small"></i> Booked Shift</span>
+                        <a href="{{ route('doctor.schedules.create') }}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-plus-lg me-1"></i> Add Schedule Block
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div id="doctor-schedule-calendar"></div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('doctor-schedule-calendar');
+        if (!calendarEl) return;
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek'
+            },
+            themeSystem: 'standard',
+            events: @json($calendarEvents),
+            eventClick: function(info) {
+                window.location.href = "{{ route('doctor.schedules.index') }}";
+            }
+        });
+        calendar.render();
+    });
+</script>
+@endpush

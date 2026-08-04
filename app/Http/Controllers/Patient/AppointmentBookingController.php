@@ -30,9 +30,14 @@ class AppointmentBookingController extends Controller
             ->where('is_booked', false)
             ->where('status', 'available')
             ->get()
+            ->sortBy([
+                fn ($a, $b) => optional($a->schedule)->schedule_date <=> optional($b->schedule)->schedule_date,
+                fn ($a, $b) => $a->start_time <=> $b->start_time,
+            ])
             ->groupBy(function ($slot) {
                 return $slot->schedule ? $slot->schedule->schedule_date->format('Y-m-d') : 'Other';
-            });
+            })
+            ->sortKeys();
 
         return view('patient.appointments.create', compact('doctor', 'availableSlots'));
     }

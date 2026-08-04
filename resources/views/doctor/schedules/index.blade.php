@@ -39,7 +39,7 @@
                                                     @if(isset($schedule->doctor->user))
                                                         <span class="badge bg-primary me-2"><i class="bi bi-person-badge me-1"></i>{{ \Illuminate\Support\Str::startsWith($schedule->doctor->user->name, 'Dr.') ? $schedule->doctor->user->name : 'Dr. '.$schedule->doctor->user->name }}</span>
                                                     @endif
-                                                    {{ $schedule->schedule_date->format('l, F j, Y') }}
+                                                    {{ $schedule->schedule_date->format('l, d M Y') }}
                                                 </h6>
                                                 <small class="text-muted">
                                                     <i class="bi bi-clock me-1"></i>

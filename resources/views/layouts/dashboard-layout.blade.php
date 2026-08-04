@@ -140,11 +140,9 @@
         // on many systems and defaults to MM/DD/YYYY which confuses non-US users.
         document.addEventListener('DOMContentLoaded', function () {
             flatpickr('input[type="date"]', {
-                dateFormat: 'Y-m-d',        // Server format: YYYY-MM-DD
-                altInput: true,             // Show formatted display input to user
-                altFormat: 'd/m/Y',         // Visible input shows DD/MM/YYYY
-                allowInput: true,           // Let user type manually
-                disableMobile: false,       // Native picker support on mobile
+                dateFormat: 'Y-m-d',        // Standard YYYY-MM-DD date format
+                allowInput: true,           // Allow typing directly or selecting from calendar
+                disableMobile: false,       // Mobile native datepicker support
             });
         });
     </script>

@@ -93,7 +93,7 @@
                                             <small class="text-muted">{{ $apt->doctor?->department?->name ?? 'General Medical' }}</small>
                                         </td>
                                         <td>
-                                            <small class="text-dark d-block fw-semibold">{{ $apt->appointment_date ? $apt->appointment_date->format('M j, Y') : 'N/A' }}</small>
+                                            <small class="text-dark d-block fw-semibold">{{ $apt->appointment_date ? $apt->appointment_date->format('d M Y') : 'N/A' }}</small>
                                             @if($apt->slot)
                                                 <small class="text-muted">{{ \Carbon\Carbon::parse($apt->slot->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($apt->slot->end_time)->format('h:i A') }}</small>
                                             @endif

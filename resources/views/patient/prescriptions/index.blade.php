@@ -1,6 +1,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('title', 'My Prescriptions')
+@section('page_title', 'My Prescriptions')
 
 @section('content')
 <div class="container-fluid px-4 py-4">

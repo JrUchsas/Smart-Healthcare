@@ -1,6 +1,7 @@
 @extends('layouts.dashboard-layout')
 
 @section('title', 'Prescription – ' . $prescription->prescription_number)
+@section('page_title', 'Prescription Details')
 
 @section('content')
 <div class="container-fluid px-4 py-4">
@@ -54,13 +55,13 @@
                         <dd class="col-sm-7">{{ $prescription->advice ?? '—' }}</dd>
 
                         <dt class="col-sm-5 text-muted">Follow-Up Date</dt>
-                        <dd class="col-sm-7">{{ $prescription->follow_up_date?->format('M j, Y') ?? '—' }}</dd>
+                        <dd class="col-sm-7">{{ $prescription->follow_up_date?->format('d M Y') ?? '—' }}</dd>
 
                         <dt class="col-sm-5 text-muted">Issued By</dt>
                         <dd class="col-sm-7 fw-semibold">Dr. {{ $prescription->doctor?->user?->name ?? 'N/A' }}</dd>
 
                         <dt class="col-sm-5 text-muted">Issued On</dt>
-                        <dd class="col-sm-7">{{ $prescription->created_at->format('M j, Y h:i A') }}</dd>
+                        <dd class="col-sm-7">{{ $prescription->created_at->format('d M Y h:i A') }}</dd>
                     </dl>
                 </div>
             </div>

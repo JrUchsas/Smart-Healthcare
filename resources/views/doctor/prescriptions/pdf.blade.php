@@ -120,7 +120,7 @@
         </div>
         <div class="meta-cell">
             <div class="meta-label">Date Issued</div>
-            <div class="meta-value">{{ $prescription->created_at->format('M j, Y') }}</div>
+            <div class="meta-value">{{ $prescription->created_at->format('d M Y') }}</div>
         </div>
     </div>
 
@@ -177,7 +177,7 @@
     @if($prescription->follow_up_date)
     <div class="section">
         <div class="section-title">Follow-Up</div>
-        <div class="section-text">Please revisit on <strong>{{ $prescription->follow_up_date->format('M j, Y') }}</strong>.</div>
+        <div class="section-text">Please revisit on <strong>{{ $prescription->follow_up_date->format('d M Y') }}</strong>.</div>
     </div>
     @endif
 
