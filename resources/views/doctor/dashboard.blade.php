@@ -66,41 +66,57 @@
                         <h3 class="fw-bold mb-0 mt-1">${{ number_format($stats['monthly_earnings'] ?? 0, 2) }}</h3>
                     </div>
                     <div class="bg-warning bg-opacity-10 p-3 rounded-circle text-warning">
-                        <i class="bi bi-cash-stack fs-4"></i>
+                        <i class="bi bi-wallet2 fs-4"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modules Section -->
+    <!-- Active Doctor Modules Grid -->
     <div class="row g-4 mb-4">
-        <!-- Today's Appointments Module Placeholder -->
+        <!-- Today's Appointments -->
         <div class="col-lg-7">
-            <div class="card shadow-sm border-0">
+            <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0 fw-bold"><i class="bi bi-clock-history me-2 text-primary"></i>Today's Appointment Schedule</h6>
-                    <span class="badge bg-primary">Module Placeholder</span>
+                    <h6 class="mb-0 fw-bold"><i class="bi bi-clock-history me-2 text-primary"></i>Today's Consultation Schedule</h6>
+                    <span class="badge bg-primary-subtle text-primary border">{{ now()->format('l, M j, Y') }}</span>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Time</th>
+                                    <th>Ref #</th>
                                     <th>Patient Name</th>
-                                    <th>Type</th>
+                                    <th>Time Slot</th>
                                     <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td colspan="5" class="text-center text-muted py-4">
-                                        <i class="bi bi-calendar-check fs-3 d-block mb-1"></i>
-                                        No appointments scheduled for today.
-                                    </td>
-                                </tr>
+                                @forelse($todayAppointments as $apt)
+                                    <tr>
+                                        <td><small class="font-monospace fw-bold">{{ $apt->appointment_number }}</small></td>
+                                        <td><strong>{{ $apt->patient?->user?->name ?? 'Patient' }}</strong></td>
+                                        <td>
+                                            @if($apt->slot)
+                                                <small class="text-muted"><i class="bi bi-clock me-1"></i>{{ \Carbon\Carbon::parse($apt->slot->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($apt->slot->end_time)->format('h:i A') }}</small>
+                                            @else
+                                                <small class="text-muted">Scheduled</small>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-warning text-dark">{{ ucfirst($apt->status) }}</span>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted py-4">
+                                            <i class="bi bi-calendar-check fs-3 d-block mb-1"></i>
+                                            No patient consultations scheduled for today.
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -108,47 +124,19 @@
             </div>
         </div>
 
-        <!-- Schedule & Availability Calendar Placeholder -->
+        <!-- Practice Schedule Management Link -->
         <div class="col-lg-5">
-            <div class="card shadow-sm border-0">
+            <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0 fw-bold"><i class="bi bi-calendar3 me-2 text-info"></i>Practice Schedule & Calendar</h6>
-                    <span class="badge bg-info">Module Placeholder</span>
+                    <h6 class="mb-0 fw-bold"><i class="bi bi-calendar3 me-2 text-info"></i>Practice Schedule Controls</h6>
                 </div>
-                <div class="card-body">
-                    <div class="text-center py-4">
-                        <i class="bi bi-calendar-week text-secondary display-4 d-block mb-2"></i>
-                        <p class="text-muted mb-0">Doctor appointment calendar slot controls will render here.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Patient History & Earnings Row -->
-    <div class="row g-4">
-        <!-- Patient History Module Placeholder -->
-        <div class="col-lg-6">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0 fw-bold"><i class="bi bi-journal-check me-2 text-success"></i>Recent Patient Consultations</h6>
-                    <span class="badge bg-success">Module Placeholder</span>
-                </div>
-                <div class="card-body">
-                    <p class="text-muted text-center py-4 mb-0">Patient consultation logs and prescription records will display here.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Earnings Summary Module Placeholder -->
-        <div class="col-lg-6">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0 fw-bold"><i class="bi bi-piggy-bank me-2 text-warning"></i>Earnings & Payout Summary</h6>
-                    <span class="badge bg-warning text-dark">Module Placeholder</span>
-                </div>
-                <div class="card-body">
-                    <p class="text-muted text-center py-4 mb-0">Monthly consultation fee payouts and financial breakdown will display here.</p>
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-calendar-range text-info display-4 d-block mb-3"></i>
+                    <h5 class="fw-bold mb-2">Shift & Availability Manager</h5>
+                    <p class="text-muted small mb-4">Set up consultation dates, start/end shift hours, and auto-generate 15/30/45/60 min appointment slots.</p>
+                    <a href="{{ route('doctor.schedules.index') }}" class="btn btn-info text-white px-4">
+                        <i class="bi bi-gear-fill me-1"></i> Manage Schedules & Slots
+                    </a>
                 </div>
             </div>
         </div>

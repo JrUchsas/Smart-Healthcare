@@ -1,59 +1,141 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <h1 align="center">🏥 Smart Healthcare Management System</h1>
+  <p align="center">
+    <strong>A Modern, Multi-Role Hospital & Appointment Booking Platform built with Laravel 12</strong>
+  </p>
+  <p align="center">
+    <img src="https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=flat-square&logo=php" alt="PHP Version">
+    <img src="https://img.shields.io/badge/Laravel-v12.x-FF2D20?style=flat-square&logo=laravel" alt="Laravel Version">
+    <img src="https://img.shields.io/badge/Bootstrap-v5.3-7952B3?style=flat-square&logo=bootstrap" alt="Bootstrap 5">
+    <img src="https://img.shields.io/badge/Test%20Suite-46%20Passed-brightgreen?style=flat-square&logo=pest" alt="Pest Tests">
+    <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License">
+  </p>
 </p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📌 Project Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Smart Healthcare Management System** is a full-featured, secure, multi-role web application designed for healthcare facilities, clinic administrators, doctors, and patients. It streamlines hospital management, department hierarchy, doctor shift schedules, and real-time appointment booking with race-condition prevention.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ✨ Key Features & Portals
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 🛡️ Administrator Control Center
+- **Hospital Hierarchy Management:** Full CRUD operations for hospital **Departments** (e.g. Cardiology, Neurology) and cascading **Specializations** (e.g. Pediatric Cardiology).
+- **Doctor Directory & Verification:** Interactive **Yajra DataTables** for reviewing, approving, and assigning departments/specializations to newly registered doctors.
+- **Doctor Schedule Monitoring:** View doctor availability and shift schedules.
+- **Real-Time Analytics:** Dashboard overview tracking total doctors, pending verification approvals, total patients, appointment logs, and revenue metrics.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🩺 Doctor Portal
+- **Shift & Availability Engine:** Select work dates, start/end shift hours, and consultation fee.
+- **Automated Slot Generator:** Generate custom 15, 30, 45, or 60-minute time slots automatically with duplicate prevention.
+- **Practice Dashboard:** Track daily consultation appointments, completed visits, and monthly earnings.
+- **Approval Protection Banner:** Pending doctor registrations display a verification status alert until reviewed by an Administrator.
 
-## Laravel Sponsors
+### 👤 Patient Portal
+- **Separate Patient Portal Registration:** Dedicated patient registration entry (`/register/patient`) preventing unauthorized role elevation.
+- **AJAX Doctor Search:** Search doctors by name, medical department, or specialization with live slot availability filtering.
+- **Atomic Booking Engine:** Reserve doctor consultation slots wrapped in database transactions using pessimistic row locking (`lockForUpdate()`) to eliminate double-booking.
+- **My Booked Appointments:** View scheduled appointments, update visit notes, or reschedule to a new time slot.
+- **Slot Auto-Release on Cancellation:** Cancelling an appointment automatically releases the time slot back to `available` status on the doctor's schedule.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 🛠️ Technology Stack
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- **Backend Framework:** [Laravel 12](https://laravel.com/) (PHP 8.2+)
+- **Role-Based Access Control (RBAC):** [Spatie Laravel-Permission](https://spatie.be/docs/laravel-permission/v6/introduction)
+- **Frontend & Styling:** Bootstrap 5.3, Bootstrap Icons, Vanilla CSS
+- **DataTables Engine:** Yajra DataTables (`yajra/laravel-datatables-oracle`)
+- **Alerts & Dialogs:** SweetAlert2
+- **Testing Framework:** [Pest PHP 3](https://pestphp.com/)
+- **Database:** MySQL 8.0+
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🔑 Pre-Seeded Default Credentials
 
-## Code of Conduct
+Executing the database seeder (`php artisan migrate:fresh --seed`) populates the system with initial roles and ready-to-use accounts:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+| User Role | Email Address | Password | Access Rights |
+| :--- | :--- | :--- | :--- |
+| **Administrator** | `admin@smarthealthcare.com` | `admin12345` | Full System Management & Doctor Approvals |
+| **Doctor** | `doctor@smarthealthcare.com` | `doctor12345` | Shifts, Slot Generation, Practice Dashboard |
+| **Patient** | Register at `/register/patient` | Custom | Doctor Search, Appointment Booking & Management |
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🚀 Quick Start & Installation
 
-## License
+### Prerequisites
+- PHP `>= 8.2`
+- Composer `>= 2.x`
+- Node.js `>= 18.x` & NPM
+- MySQL Database Engine
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Setup Instructions
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/your-username/Smart-Healthcare.git
+   cd "Smart Healthcare"
+   ```
+
+2. **Install PHP Dependencies:**
+   ```bash
+   composer install
+   ```
+
+3. **Install JavaScript Dependencies:**
+   ```bash
+   npm install
+   ```
+
+4. **Configure Environment File:**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+5. **Configure Database Settings:**
+   Open `.env` and set your MySQL database credentials:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=smart_healthcare
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+6. **Run Database Migrations & Seeders:**
+   ```bash
+   php artisan migrate:fresh --seed
+   ```
+
+7. **Compile Assets & Start Local Server:**
+   ```bash
+   npm run build
+   php artisan serve
+   ```
+
+   Visit the application at: **`http://127.0.0.1:8000`**
+
+---
+
+## 🧪 Testing & Verification
+
+The application maintains comprehensive Pest feature test coverage for core business logic, role security, booking transactions, and slot reversion.
+
+Run the test suite using Artisan:
+```bash
+php artisan test --compact
+```
+
+---
+
+## 📜 License
+
+This project is open-sourced software licensed under the [MIT License](LICENSE).

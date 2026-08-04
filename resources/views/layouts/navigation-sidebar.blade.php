@@ -64,26 +64,6 @@
             </ul>
         </div>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-person-badge"></i> Doctor Approvals
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-people"></i> Patient Management
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-calendar-check"></i> Appointments
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-graph-up"></i> Revenue Reports
-        </a>
-    </li>
 @endif
 
 {{-- Doctor Sidebar Menu --}}
@@ -96,16 +76,6 @@
     <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('doctor.schedules.*') ? 'active' : '' }}" href="{{ route('doctor.schedules.index') }}">
             <i class="bi bi-calendar-range"></i> Schedules & Availability
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-journal-medical"></i> Patient History
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-wallet2"></i> Earnings Summary
         </a>
     </li>
 @endif
@@ -125,16 +95,6 @@
     <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('patient.appointments.index') || request()->routeIs('patient.appointments.edit') ? 'active' : '' }}" href="{{ route('patient.appointments.index') }}">
             <i class="bi bi-clock-history"></i> My Booked Appointment
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-file-earmark-medical"></i> Prescriptions
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="bi bi-receipt"></i> Invoices & Payments
         </a>
     </li>
 @endif

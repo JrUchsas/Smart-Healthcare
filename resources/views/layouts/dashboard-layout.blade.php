@@ -50,6 +50,12 @@
         .stat-card:hover {
             transform: translateY(-3px);
         }
+        .card-header {
+            min-height: 56px;
+        }
+        .card {
+            border-radius: 0.75rem;
+        }
     </style>
 
     @stack('styles')
@@ -58,7 +64,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar Navigation -->
-            <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-3">
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-4">
                 <div class="d-flex align-items-center mb-4 px-2 text-white">
                     <i class="bi bi-heart-pulse-fill text-danger fs-3 me-2"></i>
                     <span class="fs-5 navbar-brand-title">Smart Health</span>
@@ -70,7 +76,7 @@
             </nav>
 
             <!-- Main Content Area -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            <main class="col-md-9 ms-sm-auto col-lg-10 p-4">
                 <!-- Top Header Navbar -->
                 <header class="d-flex justify-content-between align-items-center pb-3 mb-4 border-bottom">
                     <div>

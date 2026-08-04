@@ -1,10 +1,10 @@
 @extends('layouts.dashboard-layout')
 
 @section('title', 'Patient Dashboard')
-@section('page_title', 'Patient Portal & Health Overview')
+@section('page_title', 'Patient Health Portal & Overview')
 
 @section('content')
-    <!-- Patient Summary Cards -->
+    <!-- Statistics Overview -->
     <div class="row g-3 mb-4">
         <div class="col-md-3">
             <div class="card stat-card bg-white shadow-sm p-3 border-start border-primary border-4">
@@ -14,7 +14,7 @@
                         <h3 class="fw-bold mb-0 mt-1">{{ $stats['upcoming_appointments_count'] ?? 0 }}</h3>
                     </div>
                     <div class="bg-primary bg-opacity-10 p-3 rounded-circle text-primary">
-                        <i class="bi bi-calendar2-check-fill fs-4"></i>
+                        <i class="bi bi-calendar-check-fill fs-4"></i>
                     </div>
                 </div>
             </div>
@@ -24,11 +24,11 @@
             <div class="card stat-card bg-white shadow-sm p-3 border-start border-success border-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="text-muted small text-uppercase">Prescriptions</span>
-                        <h3 class="fw-bold mb-0 mt-1">{{ $stats['prescriptions_count'] ?? 0 }}</h3>
+                        <span class="text-muted small text-uppercase">Completed Visits</span>
+                        <h3 class="fw-bold mb-0 mt-1">{{ $stats['completed_appointments_count'] ?? 0 }}</h3>
                     </div>
                     <div class="bg-success bg-opacity-10 p-3 rounded-circle text-success">
-                        <i class="bi bi-capsule fs-4"></i>
+                        <i class="bi bi-patch-check-fill fs-4"></i>
                     </div>
                 </div>
             </div>
@@ -38,11 +38,11 @@
             <div class="card stat-card bg-white shadow-sm p-3 border-start border-info border-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="text-muted small text-uppercase">Invoices</span>
-                        <h3 class="fw-bold mb-0 mt-1">{{ $stats['invoices_count'] ?? 0 }}</h3>
+                        <span class="text-muted small text-uppercase">Doctors Visited</span>
+                        <h3 class="fw-bold mb-0 mt-1">{{ $stats['total_doctors_visited'] ?? 0 }}</h3>
                     </div>
                     <div class="bg-info bg-opacity-10 p-3 rounded-circle text-info">
-                        <i class="bi bi-receipt-cutoff fs-4"></i>
+                        <i class="bi bi-person-badge-fill fs-4"></i>
                     </div>
                 </div>
             </div>
@@ -63,33 +63,55 @@
         </div>
     </div>
 
-    <!-- Modules Grid Section -->
+    <!-- Active Patient Modules Grid -->
     <div class="row g-4 mb-4">
-        <!-- Upcoming Appointments Module Placeholder -->
-        <div class="col-lg-6">
-            <div class="card shadow-sm border-0">
+        <!-- Upcoming Appointments -->
+        <div class="col-lg-7">
+            <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0 fw-bold"><i class="bi bi-calendar-event me-2 text-primary"></i>Upcoming Appointments</h6>
-                    <span class="badge bg-primary">Module Placeholder</span>
+                    <h6 class="mb-0 fw-bold"><i class="bi bi-calendar-event me-2 text-primary"></i>My Upcoming Appointments</h6>
+                    <a href="{{ route('patient.appointments.index') }}" class="btn btn-outline-primary btn-sm">View All</a>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
+                                    <th>Ref #</th>
                                     <th>Doctor</th>
-                                    <th>Department</th>
-                                    <th>Date/Time</th>
+                                    <th>Date & Time</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td colspan="4" class="text-center text-muted py-4">
-                                        <i class="bi bi-calendar-plus fs-3 d-block mb-1"></i>
-                                        You have no upcoming appointments.
-                                    </td>
-                                </tr>
+                                @forelse($upcomingAppointments as $apt)
+                                    <tr>
+                                        <td><small class="font-monospace fw-bold">{{ $apt->appointment_number }}</small></td>
+                                        <td>
+                                            <strong>{{ \Illuminate\Support\Str::startsWith($apt->doctor?->user?->name, 'Dr.') ? $apt->doctor?->user?->name : 'Dr. '.$apt->doctor?->user?->name }}</strong><br>
+                                            <small class="text-muted">{{ $apt->doctor?->department?->name ?? 'General Medical' }}</small>
+                                        </td>
+                                        <td>
+                                            <small class="text-dark d-block fw-semibold">{{ $apt->appointment_date ? $apt->appointment_date->format('M j, Y') : 'N/A' }}</small>
+                                            @if($apt->slot)
+                                                <small class="text-muted">{{ \Carbon\Carbon::parse($apt->slot->start_time)->format('h:i A') }} - {{ \Carbon\Carbon::parse($apt->slot->end_time)->format('h:i A') }}</small>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-warning text-dark">{{ ucfirst($apt->status) }}</span>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted py-4">
+                                            <i class="bi bi-calendar-plus fs-3 d-block mb-1"></i>
+                                            You have no upcoming appointments.
+                                            <div class="mt-2">
+                                                <a href="{{ route('patient.doctors.search') }}" class="btn btn-primary btn-sm">Book Appointment Now</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -97,51 +119,28 @@
             </div>
         </div>
 
-        <!-- Prescriptions Module Placeholder -->
-        <div class="col-lg-6">
-            <div class="card shadow-sm border-0">
+        <!-- Quick Actions & Profile -->
+        <div class="col-lg-5">
+            <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0 fw-bold"><i class="bi bi-file-earmark-medical me-2 text-success"></i>My Prescriptions</h6>
-                    <span class="badge bg-success">Module Placeholder</span>
+                    <h6 class="mb-0 fw-bold"><i class="bi bi-person-circle me-2 text-secondary"></i>Account & Profile Settings</h6>
                 </div>
-                <div class="card-body">
-                    <p class="text-muted text-center py-4 mb-0">Issued medical prescriptions and PDF downloads will appear here.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-4">
-        <!-- Payment History & Invoices Module Placeholder -->
-        <div class="col-lg-6">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0 fw-bold"><i class="bi bi-credit-card me-2 text-info"></i>Payment History & Invoices</h6>
-                    <span class="badge bg-info">Module Placeholder</span>
-                </div>
-                <div class="card-body">
-                    <p class="text-muted text-center py-4 mb-0">Appointment payment history and billing receipts will display here.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Profile Management Quick Access Placeholder -->
-        <div class="col-lg-6">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0 fw-bold"><i class="bi bi-person-circle me-2 text-secondary"></i>Profile Management Overview</h6>
-                    <span class="badge bg-secondary">Module Placeholder</span>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-person-badge fs-1 text-secondary me-3"></i>
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="avatar-lg bg-primary-subtle text-primary rounded-circle p-3 me-3 d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
+                            <i class="bi bi-person-badge fs-3"></i>
+                        </div>
                         <div>
-                            <h6 class="mb-1 fw-bold">{{ auth()->user()->name }}</h6>
-                            <p class="text-muted small mb-0">{{ auth()->user()->email }} | Patient Profile</p>
+                            <h6 class="mb-1 fw-bold text-dark">{{ auth()->user()->name }}</h6>
+                            <p class="text-muted small mb-0">{{ auth()->user()->email }}</p>
                         </div>
                     </div>
                     <hr>
-                    <a href="{{ route('profile.edit') }}" class="btn btn-outline-primary btn-sm">Edit Medical Profile Details</a>
+                    <div class="d-grid gap-2">
+                        <a href="{{ route('profile.edit') }}" class="btn btn-outline-primary">
+                            <i class="bi bi-gear me-1"></i> Edit Account Profile
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
