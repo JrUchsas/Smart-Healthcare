@@ -136,7 +136,7 @@
                             <a href="{{ route('login') }}" class="btn btn-light btn-sm fw-semibold rounded-pill py-2">
                                 <i class="bi bi-person-lock me-1"></i> Sign In to Account
                             </a>
-                            <a href="{{ route('register.doctor.form') }}" class="btn btn-outline-info btn-sm rounded-pill py-2 text-white">
+                            <a href="{{ route('register.doctor') }}" class="btn btn-outline-info btn-sm rounded-pill py-2 text-white">
                                 <i class="bi bi-person-badge me-1"></i> Register as Doctor
                             </a>
                         </div>

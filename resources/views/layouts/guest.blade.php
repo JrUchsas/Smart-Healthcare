@@ -15,16 +15,24 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+    <body class="font-sans text-gray-900 antialiased bg-slate-900">
+        <div class="min-h-screen flex flex-col justify-between items-center py-6 px-4 bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900">
+            <div class="w-full flex justify-between items-center max-w-4xl px-4">
+                <a href="/" class="flex items-center space-x-2 text-white font-bold text-xl">
+                    <i class="bi bi-heart-pulse-fill text-red-500 text-2xl"></i>
+                    <span>Smart Healthcare</span>
+                </a>
+                <a href="/" class="text-sm text-teal-300 hover:text-white transition">
+                    <i class="bi bi-arrow-left me-1"></i> Back to Home
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-full sm:max-w-md my-auto px-6 py-6 bg-white/95 backdrop-blur-md shadow-2xl overflow-hidden rounded-2xl border border-white/20">
                 {{ $slot }}
+            </div>
+
+            <div class="text-center text-xs text-slate-400 py-2">
+                &copy; {{ date('Y') }} Smart Healthcare System. All rights reserved.
             </div>
         </div>
     </body>
