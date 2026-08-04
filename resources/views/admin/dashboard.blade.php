@@ -6,7 +6,7 @@
 @section('content')
     <!-- Statistics Section -->
     <div class="row g-3 mb-4">
-        <div class="col-md-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <div class="card stat-card bg-white shadow-sm p-3 border-start border-primary border-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <div class="card stat-card bg-white shadow-sm p-3 border-start border-warning border-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <div class="card stat-card bg-white shadow-sm p-3 border-start border-success border-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <a href="{{ route('admin.reports.revenue') }}" class="text-decoration-none">
                 <div class="card stat-card bg-white shadow-sm p-3 border-start border-info border-4 hover-shadow">
                     <div class="d-flex justify-content-between align-items-center">
