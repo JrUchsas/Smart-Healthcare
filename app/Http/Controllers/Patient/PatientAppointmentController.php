@@ -21,14 +21,28 @@ class PatientAppointmentController extends Controller
     public function index(Request $request): View
     {
         $patient = Patient::firstOrCreate(['user_id' => $request->user()->id]);
+        $type = $request->query('type', 'booked');
 
-        $appointments = $patient->appointments()
-            ->with(['doctor.user', 'doctor.department', 'doctor.specialization', 'slot'])
-            ->orderBy('appointment_date', 'desc')
-            ->orderBy('id', 'desc')
-            ->paginate(10);
+        if ($type === 'completed') {
+            $pageTitle = 'Completed Appointments';
+            $appointments = $patient->appointments()
+                ->with(['doctor.user', 'doctor.department', 'prescription'])
+                ->where('status', 'completed')
+                ->orderBy('appointment_date', 'desc')
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+        } else {
+            $type = 'booked';
+            $pageTitle = 'Booked Appointments';
+            $appointments = $patient->appointments()
+                ->with(['doctor.user', 'doctor.department', 'doctor.specialization', 'slot', 'invoice', 'prescription'])
+                ->whereIn('status', ['pending', 'confirmed'])
+                ->orderBy('appointment_date', 'desc')
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+        }
 
-        return view('patient.appointments.index', compact('appointments'));
+        return view('patient.appointments.index', compact('appointments', 'pageTitle', 'type'));
     }
 
     /**

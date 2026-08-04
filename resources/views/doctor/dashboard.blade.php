@@ -91,6 +91,7 @@
                                     <th>Patient Name</th>
                                     <th>Time Slot</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -118,10 +119,23 @@
                                                 <span class="badge bg-warning-subtle text-dark border"><i class="bi bi-hourglass-split me-1"></i> Unpaid</span>
                                             @endif
                                         </td>
+                                        <td>
+                                            @if($apt->prescription)
+                                                <a href="{{ route('doctor.prescriptions.show', $apt->prescription) }}" class="btn btn-outline-success btn-sm">
+                                                    <i class="bi bi-file-medical me-1"></i> View Rx
+                                                </a>
+                                            @elseif($apt->payment_status === 'paid')
+                                                <a href="{{ route('doctor.prescriptions.create', $apt) }}" class="btn btn-primary btn-sm">
+                                                    <i class="bi bi-pencil-square me-1"></i> Prescribe
+                                                </a>
+                                            @else
+                                                <span class="badge bg-secondary-subtle text-secondary border">Awaiting Payment</span>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center text-muted py-4">
+                                        <td colspan="5" class="text-center text-muted py-4">
                                             <i class="bi bi-calendar-check fs-3 d-block mb-1"></i>
                                             No patient consultations scheduled for today.
                                         </td>

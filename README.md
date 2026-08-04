@@ -136,6 +136,3 @@ php artisan test --compact
 
 ---
 
-## 📜 License
-
-This project is open-sourced software licensed under the [MIT License](LICENSE).

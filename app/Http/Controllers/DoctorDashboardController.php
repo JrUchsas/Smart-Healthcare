@@ -19,14 +19,23 @@ class DoctorDashboardController extends Controller
 
         $todayDate = now()->toDateString();
 
-        $todayAppointments = Appointment::with(['patient.user', 'slot'])
+        // Completed appointments must not appear in the active schedule —
+        // the doctor has already prescribed for them; the slot is done.
+        $todayAppointments = Appointment::with(['patient.user', 'slot', 'prescription'])
             ->where('doctor_id', $doctor->id)
             ->whereDate('appointment_date', $todayDate)
+            ->whereIn('status', ['pending', 'confirmed'])
             ->orderBy('id', 'asc')
-            ->get();
+            ->get()
+            // Re-sort in PHP by slot start_time so the schedule reads chronologically
+            ->sortBy(fn ($apt) => optional($apt->slot)->start_time ?? '99:99:99')
+            ->values();
 
         $stats = [
-            'today_appointments_count' => $todayAppointments->count(),
+            'today_appointments_count' => Appointment::where('doctor_id', $doctor->id)
+                ->whereDate('appointment_date', $todayDate)
+                ->whereIn('status', ['pending', 'confirmed'])
+                ->count(),
             'completed_appointments_count' => Appointment::where('doctor_id', $doctor->id)
                 ->whereDate('appointment_date', $todayDate)
                 ->where('status', 'completed')

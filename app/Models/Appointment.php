@@ -79,4 +79,12 @@ class Appointment extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    /**
+     * Get the prescription issued after consultation.
+     */
+    public function prescription(): HasOne
+    {
+        return $this->hasOne(Prescription::class);
+    }
 }

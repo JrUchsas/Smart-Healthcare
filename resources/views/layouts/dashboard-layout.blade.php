@@ -14,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
 
     <style>
         body {
@@ -131,6 +132,22 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        // Attach Flatpickr globally to every date input so the calendar always
+        // shows DD/MM/YYYY — the browser's native date picker ignores locale
+        // on many systems and defaults to MM/DD/YYYY which confuses non-US users.
+        document.addEventListener('DOMContentLoaded', function () {
+            flatpickr('input[type="date"]', {
+                dateFormat: 'Y-m-d',        // Server format: YYYY-MM-DD
+                altInput: true,             // Show formatted display input to user
+                altFormat: 'd/m/Y',         // Visible input shows DD/MM/YYYY
+                allowInput: true,           // Let user type manually
+                disableMobile: false,       // Native picker support on mobile
+            });
+        });
+    </script>
 
     @stack('scripts')
 </body>

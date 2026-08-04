@@ -78,6 +78,11 @@
             <i class="bi bi-calendar-range"></i> Schedules & Availability
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('doctor.consultations.completed') ? 'active' : '' }}" href="{{ route('doctor.consultations.completed') }}">
+            <i class="bi bi-check-all"></i> Completed Consultations
+        </a>
+    </li>
 @endif
 
 {{-- Patient Sidebar Menu --}}
@@ -93,8 +98,34 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('patient.appointments.index') || request()->routeIs('patient.appointments.edit') ? 'active' : '' }}" href="{{ route('patient.appointments.index') }}">
-            <i class="bi bi-clock-history"></i> My Booked Appointment
+        <a class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('patient.appointments.*') ? 'active' : '' }}"
+           href="#appointmentsSubmenu"
+           data-bs-toggle="collapse"
+           role="button"
+           aria-expanded="{{ request()->routeIs('patient.appointments.*') ? 'true' : 'false' }}">
+            <span><i class="bi bi-calendar2-check me-2"></i> My Appointments</span>
+            <i class="bi bi-chevron-down small"></i>
+        </a>
+        <div class="collapse {{ request()->routeIs('patient.appointments.*') ? 'show' : '' }}" id="appointmentsSubmenu">
+            <ul class="nav flex-column ms-3 mt-1">
+                <li class="nav-item">
+                    <a class="nav-link py-1.5 px-3 {{ request()->routeIs('patient.appointments.index') && request('type', 'booked') === 'booked' ? 'active' : '' }}"
+                       href="{{ route('patient.appointments.index', ['type' => 'booked']) }}">
+                        <i class="bi bi-hourglass-split me-2"></i> Booked Appointments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link py-1.5 px-3 {{ request()->routeIs('patient.appointments.index') && request('type') === 'completed' ? 'active' : '' }}"
+                       href="{{ route('patient.appointments.index', ['type' => 'completed']) }}">
+                        <i class="bi bi-check-all me-2"></i> Completed Appointments
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('patient.prescriptions.*') ? 'active' : '' }}" href="{{ route('patient.prescriptions.index') }}">
+            <i class="bi bi-file-medical me-2"></i> My Prescriptions
         </a>
     </li>
 @endif

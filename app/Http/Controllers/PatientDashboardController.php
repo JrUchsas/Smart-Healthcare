@@ -18,13 +18,15 @@ class PatientDashboardController extends Controller
 
         $upcomingAppointments = Appointment::with(['doctor.user', 'doctor.department', 'slot'])
             ->where('patient_id', $patient->id)
-            ->where('status', '!=', 'cancelled')
+            ->whereIn('status', ['pending', 'confirmed'])
             ->orderBy('appointment_date', 'asc')
             ->take(5)
             ->get();
 
         $stats = [
-            'upcoming_appointments_count' => $upcomingAppointments->count(),
+            'upcoming_appointments_count' => Appointment::where('patient_id', $patient->id)
+                ->whereIn('status', ['pending', 'confirmed'])
+                ->count(),
             'completed_appointments_count' => Appointment::where('patient_id', $patient->id)
                 ->where('status', 'completed')
                 ->count(),

@@ -101,6 +101,8 @@
                                         <td>
                                             @if($apt->status === 'confirmed')
                                                 <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Confirmed</span>
+                                            @elseif($apt->status === 'completed')
+                                                <span class="badge bg-info"><i class="bi bi-check-all me-1"></i> Completed</span>
                                             @else
                                                 <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i> Pending</span>
                                             @endif
