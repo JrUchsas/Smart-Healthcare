@@ -106,7 +106,17 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <span class="badge bg-warning text-dark">{{ ucfirst($apt->status) }}</span>
+                                            @if($apt->status === 'confirmed')
+                                                <span class="badge bg-success me-1"><i class="bi bi-check-circle me-1"></i> Confirmed</span>
+                                            @else
+                                                <span class="badge bg-warning text-dark me-1"><i class="bi bi-hourglass-split me-1"></i> Pending</span>
+                                            @endif
+
+                                            @if($apt->payment_status === 'paid')
+                                                <span class="badge bg-success-subtle text-success border"><i class="bi bi-currency-dollar me-1"></i> Paid</span>
+                                            @else
+                                                <span class="badge bg-warning-subtle text-dark border"><i class="bi bi-hourglass-split me-1"></i> Unpaid</span>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty

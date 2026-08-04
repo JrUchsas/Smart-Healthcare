@@ -126,7 +126,7 @@
                                     <th>Ref #</th>
                                     <th>Patient</th>
                                     <th>Doctor</th>
-                                    <th>Date</th>
+                                    <th>Fee & Payment</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -135,7 +135,14 @@
                                         <td><small class="font-monospace fw-bold">{{ $apt->appointment_number }}</small></td>
                                         <td>{{ $apt->patient?->user?->name ?? 'Patient' }}</td>
                                         <td>{{ $apt->doctor?->user?->name ?? 'Doctor' }}</td>
-                                        <td><small class="text-muted">{{ $apt->appointment_date ? $apt->appointment_date->format('M j, Y') : 'N/A' }}</small></td>
+                                        <td>
+                                            <span class="fw-bold text-dark">${{ number_format($apt->consultation_fee, 2) }}</span>
+                                            @if($apt->payment_status === 'paid')
+                                                <span class="badge bg-success-subtle text-success border ms-1"><i class="bi bi-check-circle me-1"></i> Paid</span>
+                                            @else
+                                                <span class="badge bg-warning-subtle text-dark border ms-1"><i class="bi bi-hourglass-split me-1"></i> Unpaid</span>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>

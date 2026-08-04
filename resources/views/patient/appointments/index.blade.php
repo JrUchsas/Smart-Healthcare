@@ -93,6 +93,15 @@
                                     </td>
                                     <td class="text-end">
                                         <div class="btn-group btn-group-sm">
+                                            @if($apt->payment_status === 'unpaid' && $apt->status !== 'cancelled')
+                                                <a href="{{ route('patient.payments.checkout', $apt) }}" class="btn btn-success" title="Pay Consultation Fee">
+                                                    <i class="bi bi-credit-card me-1"></i> Pay Now
+                                                </a>
+                                            @elseif($apt->invoice)
+                                                <a href="{{ route('patient.invoices.show', $apt->invoice) }}" class="btn btn-outline-info" title="View Invoice">
+                                                    <i class="bi bi-receipt me-1"></i> Invoice
+                                                </a>
+                                            @endif
                                             <a href="{{ route('patient.appointments.edit', $apt) }}" class="btn btn-outline-primary" title="Edit Notes">
                                                 <i class="bi bi-pencil-square me-1"></i> Edit
                                             </a>

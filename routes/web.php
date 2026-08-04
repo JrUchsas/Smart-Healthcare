@@ -72,6 +72,7 @@ Route::middleware(['auth', 'role:Doctor'])->prefix('doctor')->name('doctor.')->g
 use App\Http\Controllers\Patient\AppointmentBookingController;
 use App\Http\Controllers\Patient\DoctorSearchController;
 use App\Http\Controllers\Patient\PatientAppointmentController;
+use App\Http\Controllers\Patient\PaymentController;
 
 // Patient Routes Group
 Route::middleware(['auth', 'role:Patient'])->prefix('patient')->name('patient.')->group(function () {
@@ -86,6 +87,9 @@ Route::middleware(['auth', 'role:Patient'])->prefix('patient')->name('patient.')
         'update' => 'appointments.update',
         'destroy' => 'appointments.destroy',
     ]);
+    Route::get('/appointments/{appointment}/checkout', [PaymentController::class, 'checkout'])->name('payments.checkout');
+    Route::post('/payments/process', [PaymentController::class, 'process'])->name('payments.process');
+    Route::get('/invoices/{invoice}', [PaymentController::class, 'showInvoice'])->name('invoices.show');
 });
 
 Route::middleware('auth')->group(function () {

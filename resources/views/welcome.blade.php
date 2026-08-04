@@ -71,7 +71,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" href="{{ url('/') }}">Home</a></li>
                 </ul>
                 <div class="d-flex align-items-center gap-2">
                     @if (Route::has('login'))

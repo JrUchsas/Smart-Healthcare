@@ -81,6 +81,7 @@
                                     <th>Doctor</th>
                                     <th>Date & Time</th>
                                     <th>Status</th>
+                                    <th class="text-end">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -98,12 +99,27 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <span class="badge bg-warning text-dark">{{ ucfirst($apt->status) }}</span>
+                                            @if($apt->status === 'confirmed')
+                                                <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Confirmed</span>
+                                            @else
+                                                <span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i> Pending</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-end">
+                                            @if($apt->payment_status === 'unpaid' && $apt->status !== 'cancelled')
+                                                <a href="{{ route('patient.payments.checkout', $apt) }}" class="btn btn-success btn-sm px-3" title="Pay Consultation Fee">
+                                                    <i class="bi bi-credit-card me-1"></i> Pay Now
+                                                </a>
+                                            @elseif($apt->invoice)
+                                                <a href="{{ route('patient.invoices.show', $apt->invoice) }}" class="btn btn-outline-info btn-sm px-3" title="View Invoice">
+                                                    <i class="bi bi-receipt me-1"></i> Invoice
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center text-muted py-4">
+                                        <td colspan="5" class="text-center text-muted py-4">
                                             <i class="bi bi-calendar-plus fs-3 d-block mb-1"></i>
                                             You have no upcoming appointments.
                                             <div class="mt-2">

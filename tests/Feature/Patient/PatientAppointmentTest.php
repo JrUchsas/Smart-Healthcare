@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\DoctorSchedule;
 use App\Models\Patient;
+use App\Models\Payment;
 use App\Models\User;
 use Database\Seeders\RoleAndPermissionSeeder;
 
@@ -86,6 +87,36 @@ test('patient can cancel appointment and release slot back to available status',
     ]);
 
     // Slot reverted to available
+    $this->assertDatabaseHas('appointment_slots', [
+        'id' => $this->slot->id,
+        'is_booked' => 0,
+        'status' => 'available',
+    ]);
+});
+
+test('deleting paid confirmed appointment releases slot and cleans up payment records', function () {
+    $this->appointment->update([
+        'status' => 'confirmed',
+        'payment_status' => 'paid',
+    ]);
+
+    $payment = Payment::create([
+        'payment_number' => 'PAY-DEL-01',
+        'appointment_id' => $this->appointment->id,
+        'patient_id' => $this->patient->id,
+        'amount' => 75.00,
+        'payment_method' => 'credit_card',
+        'payment_status' => 'completed',
+        'paid_at' => now(),
+    ]);
+
+    $response = $this->actingAs($this->patientUser)->delete(route('patient.appointments.destroy', $this->appointment));
+
+    $response->assertRedirect(route('patient.appointments.index'));
+
+    $this->assertDatabaseMissing('appointments', ['id' => $this->appointment->id]);
+    $this->assertDatabaseMissing('payments', ['id' => $payment->id]);
+
     $this->assertDatabaseHas('appointment_slots', [
         'id' => $this->slot->id,
         'is_booked' => 0,
