@@ -24,6 +24,7 @@ class Doctor extends Model
         'experience_years',
         'consultation_fee',
         'phone',
+        'address',
         'bio',
         'is_available',
     ];

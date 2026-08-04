@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\ActivityLog;
+use App\Models\Doctor;
+use App\Models\Patient;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,13 +29,32 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->safe()->only(['name', 'email']));
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
+
+        // Update Patient Profile
+        if ($user->hasRole('Patient') || $user->user_type === 'patient') {
+            $patient = Patient::firstOrCreate(['user_id' => $user->id]);
+            $patient->update($request->only([
+                'dob', 'gender', 'blood_group', 'phone', 'address', 'emergency_contact',
+            ]));
+        }
+
+        // Update Doctor Profile
+        if ($user->hasRole('Doctor') || $user->user_type === 'doctor') {
+            $doctor = Doctor::firstOrCreate(['user_id' => $user->id]);
+            $doctor->update($request->only([
+                'qualification', 'experience_years', 'consultation_fee', 'phone', 'address', 'bio',
+            ]));
+        }
+
+        ActivityLog::log('Profile Updated', "User {$user->name} updated profile details.", $user);
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

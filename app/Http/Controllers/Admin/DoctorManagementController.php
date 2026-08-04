@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateDoctorProfileRequest;
+use App\Models\ActivityLog;
 use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Specialization;
@@ -96,6 +97,8 @@ class DoctorManagementController extends Controller
 
         $doctor->update($validated);
         $doctor->user?->update(['is_active' => $validated['is_available']]);
+
+        ActivityLog::log('Doctor Profile Updated', "Admin updated profile and availability status for Dr. {$doctor->user?->name}.", null, 'Doctor Management');
 
         return redirect()->route('admin.doctors.index')
             ->with('success', 'Doctor profile, department, and specialization updated successfully.');

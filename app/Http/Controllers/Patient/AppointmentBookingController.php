@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAppointmentRequest;
+use App\Models\ActivityLog;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Services\AppointmentBookingService;
@@ -51,6 +52,13 @@ class AppointmentBookingController extends Controller
 
         try {
             $appointment = $this->bookingService->bookAppointment($patient, $request->validated());
+
+            ActivityLog::log(
+                'Appointment Booked',
+                "Appointment #{$appointment->appointment_number} booked with Dr. {$appointment->doctor?->user?->name} for {$appointment->appointment_date?->format('d M Y')}.",
+                $request->user(),
+                'Appointments'
+            );
 
             if ($request->ajax()) {
                 return response()->json([

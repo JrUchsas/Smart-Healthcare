@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePrescriptionRequest;
+use App\Models\ActivityLog;
 use App\Models\Appointment;
 use App\Models\Prescription;
 use App\Services\PrescriptionPdfService;
@@ -74,8 +75,15 @@ class PrescriptionController extends Controller
         // and shows up correctly in both the doctor and patient completed counts.
         $appointment->update(['status' => 'completed']);
 
+        ActivityLog::log(
+            'Prescription Issued',
+            "Prescription #{$prescription->prescription_number} issued for appointment #{$appointment->appointment_number}.",
+            Auth::user(),
+            'Prescriptions'
+        );
+
         return redirect()->route('doctor.prescriptions.show', $prescription)
-            ->with('success', 'Prescription issued successfully.');
+            ->with('success', 'Prescription created and appointment completed successfully.');
     }
 
     /**

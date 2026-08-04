@@ -46,9 +46,11 @@ Route::get('/dashboard', function (Request $request) {
     return redirect()->route('patient.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\AdminAppointmentController;
 use App\Http\Controllers\Admin\AdminRevenueReportController;
 use App\Http\Controllers\Admin\DoctorManagementController;
+use App\Http\Controllers\Admin\SystemSettingController;
 
 // Admin Routes Group
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -64,13 +66,32 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
 
     // Revenue & Financial Reports Route
     Route::get('/reports/revenue', [AdminRevenueReportController::class, 'index'])->name('reports.revenue');
+
+    // Activity Logs & Audit Trail Routes
+    Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
+    Route::delete('/activity-logs/selected', [ActivityLogController::class, 'destroySelected'])->name('activity-logs.destroy-selected');
+    Route::delete('/activity-logs/clear', [ActivityLogController::class, 'clearAll'])->name('activity-logs.clear');
+
+    // System Settings Routes
+    Route::get('/settings', [SystemSettingController::class, 'index'])->name('settings.index');
+    Route::put('/settings', [SystemSettingController::class, 'update'])->name('settings.update');
 });
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Doctor\DoctorScheduleController;
 
 // Doctor Schedules Routes (Accessible to Admin, Doctor, and Patient)
 Route::middleware(['auth', 'role:Admin|Doctor|Patient'])->prefix('doctor')->name('doctor.')->group(function () {
     Route::resource('schedules', DoctorScheduleController::class);
+});
+
+// Real-Time Chat & Communication Routes (Accessible to Admin, Doctor, and Patient)
+Route::middleware(['auth', 'verified'])->prefix('chat')->name('chat.')->group(function () {
+    Route::get('/', [ChatController::class, 'index'])->name('index');
+    Route::get('/start', [ChatController::class, 'start'])->name('start');
+    Route::get('/room/{room}/messages', [ChatController::class, 'getMessages'])->name('messages');
+    Route::post('/room/{room}/send', [ChatController::class, 'sendMessage'])->name('send');
+    Route::post('/room/{room}/typing', [ChatController::class, 'typing'])->name('typing');
 });
 
 use App\Http\Controllers\Doctor\DoctorCompletedConsultationsController;

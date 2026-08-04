@@ -1,29 +1,32 @@
 @extends('layouts.dashboard-layout')
 
-@section('title', 'Find a Doctor')
-@section('page_title', 'Doctor Directory & Search')
+@section('title', 'Doctor Directory')
+@section('page_title', 'Doctor Directory & Specialists')
 
 @section('content')
+<div class="container-fluid px-0">
+
+    {{-- Search & Filter Bar --}}
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body p-4">
-            <form id="doctor-search-form" class="row g-3">
+            <form method="GET" action="{{ route('patient.doctors.search') }}" class="row g-3 align-items-center">
                 <div class="col-md-7">
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                        <input type="text" 
-                               name="q" 
-                               id="search-query" 
-                               class="form-control border-start-0 ps-0" 
-                               placeholder="Search doctor by name, qualification, or medical specialty..."
+                        <input type="text"
+                               name="q"
+                               id="search-query"
+                               class="form-control border-start-0 ps-0"
+                               placeholder="Search doctor by name, qualification, or specialty..."
                                value="{{ request('q') }}">
                     </div>
                 </div>
 
                 <div class="col-md-3">
-                    <select name="department_id" id="department-filter" class="form-select">
+                    <select name="department_id" id="department-filter" class="form-select" onchange="this.form.submit()">
                         <option value="">All Departments</option>
                         @foreach($departments as $dept)
-                            <option value="{{ $dept->id }}" {{ request('department_id') == $dept->id ? 'selected' : '' }}>
+                            <option value="{{ $dept->id }}" {{ (string)request('department_id') === (string)$dept->id ? 'selected' : '' }}>
                                 {{ $dept->name }}
                             </option>
                         @endforeach
@@ -31,13 +34,13 @@
                 </div>
 
                 <div class="col-md-2 d-grid">
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-funnel me-1"></i> Filter</button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-filter me-1"></i> Filter</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Doctor Cards Grid -->
+    {{-- Doctor Cards Grid List --}}
     <div class="row g-4" id="doctors-grid">
         @forelse($doctors as $doctor)
             <div class="col-md-6 col-lg-4">
@@ -45,41 +48,54 @@
                     <div class="card-body p-4 d-flex flex-column justify-content-between">
                         <div>
                             <div class="d-flex align-items-center mb-3">
-                                <div class="avatar-lg bg-primary-subtle text-primary rounded-circle p-3 me-3 d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
-                                    <i class="bi bi-person-badge fs-3"></i>
+                                <div class="avatar-lg bg-primary-subtle text-primary rounded-circle p-3 me-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 56px; height: 56px;">
+                                    <i class="bi bi-person-badge fs-2"></i>
                                 </div>
-                                <div>
-                                    <h5 class="card-title fw-bold mb-1 text-dark">{{ \Illuminate\Support\Str::startsWith($doctor->user?->name, 'Dr.') ? $doctor->user?->name : 'Dr. '.$doctor->user?->name }}</h5>
-                                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle me-1">
-                                        {{ $doctor->department?->name ?? 'General Medical' }}
+                                <div class="min-width-0">
+                                    <h5 class="card-title fw-bold mb-1 text-dark text-truncate">
+                                        {{ \Illuminate\Support\Str::startsWith($doctor->user?->name, 'Dr.') ? $doctor->user?->name : 'Dr. '.$doctor->user?->name }}
+                                    </h5>
+                                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle">
+                                        {{ $doctor->department?->name ?? 'General Practice' }}
                                     </span>
                                 </div>
                             </div>
 
-                            <p class="text-muted small mb-2">
-                                <i class="bi bi-patch-check-fill text-info me-1"></i>
-                                <strong>Specialty:</strong> {{ $doctor->specialization?->name ?? 'Specialist' }}
-                            </p>
-
-                            <p class="text-muted small mb-2">
-                                <i class="bi bi-mortarboard me-1"></i>
-                                <strong>Qualification:</strong> {{ $doctor->qualification ?? 'MBBS, MD' }}
-                            </p>
-
-                            <p class="text-muted small mb-3">
-                                <i class="bi bi-briefcase me-1"></i>
-                                <strong>Experience:</strong> {{ $doctor->experience_years }} Years Practice
-                            </p>
+                            <div class="bg-light p-3 rounded mb-3">
+                                <p class="text-muted small mb-1">
+                                    <i class="bi bi-patch-check-fill text-info me-1"></i>
+                                    <strong>Specialization:</strong> {{ $doctor->specialization?->name ?? 'Medical Specialist' }}
+                                </p>
+                                <p class="text-muted small mb-1">
+                                    <i class="bi bi-mortarboard me-1 text-secondary"></i>
+                                    <strong>Qualification:</strong> {{ $doctor->qualification ?? 'MBBS, MD' }}
+                                </p>
+                                <p class="text-muted small mb-0">
+                                    <i class="bi bi-briefcase me-1 text-secondary"></i>
+                                    <strong>Experience:</strong> {{ $doctor->experience_years }} Years Practice
+                                </p>
+                            </div>
                         </div>
 
-                        <div class="pt-3 border-top d-flex align-items-center justify-content-between">
-                            <div>
-                                <small class="text-muted d-block">Consultation Fee</small>
-                                <span class="fw-bold text-success fs-5">${{ number_format($doctor->consultation_fee, 2) }}</span>
+                        <div>
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div>
+                                    <small class="text-muted d-block">Consultation Fee</small>
+                                    <span class="fw-bold text-success fs-5">${{ number_format($doctor->consultation_fee, 2) }}</span>
+                                </div>
+                                <span class="badge bg-success-subtle text-success border">
+                                    <i class="bi bi-circle-fill small me-1"></i> Available
+                                </span>
                             </div>
-                            <a href="{{ route('patient.appointments.create', $doctor) }}" class="btn btn-outline-primary btn-sm px-3">
-                                <i class="bi bi-calendar-plus me-1"></i> Book Slot
-                            </a>
+
+                            <div class="d-flex gap-2">
+                                <a href="{{ route('patient.appointments.create', $doctor) }}" class="btn btn-primary btn-sm flex-fill">
+                                    <i class="bi bi-calendar-plus me-1"></i> Book Slot
+                                </a>
+                                <a href="{{ route('chat.start', ['doctor_id' => $doctor->id]) }}" class="btn btn-outline-secondary btn-sm" title="Chat with Doctor">
+                                    <i class="bi bi-chat-dots"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -95,47 +111,11 @@
         @endforelse
     </div>
 
-    <div class="mt-4" id="pagination-container">
-        {{ $doctors->withQueryString()->links() }}
-    </div>
+    @if($doctors->hasPages())
+        <div class="mt-4" id="pagination-container">
+            {{ $doctors->withQueryString()->links() }}
+        </div>
+    @endif
+
+</div>
 @endsection
-
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            // Live AJAX filter on search input or department change
-            $('#doctor-search-form').on('submit', function(e) {
-                e.preventDefault();
-                fetchDoctors();
-            });
-
-            $('#department-filter').on('change', function() {
-                fetchDoctors();
-            });
-
-            function fetchDoctors() {
-                var query = $('#search-query').val();
-                var departmentId = $('#department-filter').val();
-
-                $.ajax({
-                    url: "{{ route('patient.doctors.search') }}",
-                    type: "GET",
-                    data: {
-                        q: query,
-                        department_id: departmentId
-                    },
-                    beforeSend: function() {
-                        $('#doctors-grid').css('opacity', '0.5');
-                    },
-                    success: function(response) {
-                        $('#doctors-grid').css('opacity', '1');
-                        window.location.href = "{{ route('patient.doctors.search') }}?q=" + encodeURIComponent(query) + "&department_id=" + encodeURIComponent(departmentId);
-                    },
-                    error: function() {
-                        $('#doctors-grid').css('opacity', '1');
-                    }
-                });
-            }
-        });
-    </script>
-@endpush

@@ -78,6 +78,20 @@
             <i class="bi bi-graph-up-arrow me-2"></i> Revenue Reports
         </a>
     </li>
+
+    {{-- Activity Logs --}}
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.activity-logs.*') ? 'active' : '' }}" href="{{ route('admin.activity-logs.index') }}">
+            <i class="bi bi-journal-text me-2"></i> Activity Logs
+        </a>
+    </li>
+
+    {{-- System Settings --}}
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" href="{{ route('admin.settings.index') }}">
+            <i class="bi bi-gear me-2"></i> System Settings
+        </a>
+    </li>
 @endif
 
 {{-- Doctor Sidebar Menu --}}
@@ -97,6 +111,11 @@
             <i class="bi bi-check-all"></i> Completed Consultations
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('chat.*') ? 'active' : '' }}" href="{{ route('chat.index') }}">
+            <i class="bi bi-chat-dots me-2"></i> Messages & Chat
+        </a>
+    </li>
 @endif
 
 {{-- Patient Sidebar Menu --}}
@@ -108,7 +127,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('patient.doctors.*') || request()->routeIs('patient.appointments.create') ? 'active' : '' }}" href="{{ route('patient.doctors.search') }}">
-            <i class="bi bi-search me-1"></i> Find Doctor Appointment
+            <i class="bi bi-person-lines-fill me-2"></i> Doctor Directory
         </a>
     </li>
     <li class="nav-item">
@@ -140,6 +159,11 @@
     <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('patient.prescriptions.*') ? 'active' : '' }}" href="{{ route('patient.prescriptions.index') }}">
             <i class="bi bi-file-medical me-2"></i> My Prescriptions
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('chat.*') ? 'active' : '' }}" href="{{ route('chat.index') }}">
+            <i class="bi bi-chat-dots me-2"></i> Messages & Chat
         </a>
     </li>
 @endif
