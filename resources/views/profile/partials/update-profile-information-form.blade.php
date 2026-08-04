@@ -57,7 +57,7 @@
         {{-- Phone Number --}}
         <div>
             <x-input-label for="phone" :value="__('Phone Number')" />
-            <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone', $patient?->phone ?? $doctor?->phone ?? '')" placeholder="+1 (555) 019-2834" />
+            <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone', $patient?->phone ?? $doctor?->phone ?? '')" placeholder="+880 1712-345678" />
             <x-input-error class="mt-2" :messages="$errors->get('phone')" />
         </div>
 

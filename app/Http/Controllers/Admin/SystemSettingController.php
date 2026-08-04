@@ -21,8 +21,8 @@ class SystemSettingController extends Controller
             'hospital_name' => SystemSetting::get('hospital_name', 'Smart Healthcare Medical Center'),
             'hospital_tagline' => SystemSetting::get('hospital_tagline', 'Advanced Digital Patient Care & Clinical Management'),
             'contact_email' => SystemSetting::get('contact_email', 'contact@smarthealthcare.com'),
-            'contact_phone' => SystemSetting::get('contact_phone', '+1 (800) 555-0199'),
-            'emergency_hotline' => SystemSetting::get('emergency_hotline', '+1 (800) 911-9999'),
+            'contact_phone' => SystemSetting::get('contact_phone', '+880 1800-555019'),
+            'emergency_hotline' => SystemSetting::get('emergency_hotline', '+880 1611-999999'),
             'hospital_address' => SystemSetting::get('hospital_address', '742 Evergreen Medical Parkway, Suite 400, New York, NY 10001'),
 
             // Financial & Billing

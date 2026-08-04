@@ -32,7 +32,7 @@ class AdminSeeder extends Seeder
         Admin::firstOrCreate(
             ['user_id' => $adminUser->id],
             [
-                'phone' => '+1234567890',
+                'phone' => '+880 1712-000000',
                 'designation' => 'Super Administrator',
             ]
         );

@@ -63,7 +63,7 @@ class DoctorSeeder extends Seeder
                 'qualification' => 'MD, FACC (Cardiovascular Medicine)',
                 'experience_years' => 10,
                 'consultation_fee' => 100.00,
-                'phone' => '+1 (555) 234-5678',
+                'phone' => '+880 1712-345678',
                 'bio' => 'Senior Cardiologist specializing in preventive heart care and angioplasty.',
                 'is_available' => true,
             ]

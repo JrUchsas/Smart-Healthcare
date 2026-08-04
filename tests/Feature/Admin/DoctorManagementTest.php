@@ -38,7 +38,7 @@ test('admin can assign department and specialization to doctor', function () {
         'qualification' => 'MBBS, MD',
         'experience_years' => 7,
         'consultation_fee' => 120.00,
-        'phone' => '+1 555-999-8888',
+        'phone' => '+880 1712-345678',
         'bio' => 'Experienced cardiologist',
         'is_available' => 1,
     ]);

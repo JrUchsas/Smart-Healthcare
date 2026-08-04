@@ -82,7 +82,7 @@
 
                             <div class="col-md-6">
                                 <label for="phone" class="form-label fw-semibold">Phone Number</label>
-                                <input type="text" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone', $doctor->phone) }}" placeholder="+1 (555) 000-0000">
+                                <input type="text" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone', $doctor->phone) }}" placeholder="+880 1712-345678">
                                 @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

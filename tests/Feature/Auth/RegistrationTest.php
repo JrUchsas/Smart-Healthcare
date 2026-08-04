@@ -43,7 +43,7 @@ test('new doctor can register via doctor portal', function () {
         'name' => 'Dr. Robert Blake',
         'email' => 'doctor.portal@example.com',
         'qualification' => 'MBBS, MD',
-        'phone' => '+1 (555) 345-6789',
+        'phone' => '+880 1712-345678',
         'password' => 'password',
         'password_confirmation' => 'password',
     ]);
