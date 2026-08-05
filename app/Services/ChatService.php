@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Models\ChatMessage;
 use App\Models\ChatRoom;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
 
 class ChatService
@@ -69,6 +71,33 @@ class ChatService
         ]);
 
         $room->update(['last_message_at' => now()]);
+
+        // Send notification to recipient user
+        $recipientUserId = null;
+        $senderDisplayName = $sender->name;
+
+        if ((int) $sender->id === (int) $room->patient?->user_id) {
+            $recipientUserId = $room->doctor?->user_id;
+        } else {
+            $recipientUserId = $room->patient?->user_id;
+            if ($sender->hasRole('Doctor') || $sender->user_type === 'doctor') {
+                $senderDisplayName = 'Dr. '.$sender->name;
+            }
+        }
+
+        if ($recipientUserId) {
+            $snippet = ! empty($data['message'])
+                ? Str::limit($data['message'], 60)
+                : 'Sent a file attachment: '.$attachmentName;
+
+            Notification::create([
+                'user_id' => $recipientUserId,
+                'title' => 'New Message from '.$senderDisplayName,
+                'message' => $snippet,
+                'type' => 'chat',
+                'is_read' => false,
+            ]);
+        }
 
         return $message;
     }

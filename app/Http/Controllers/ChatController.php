@@ -13,6 +13,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class ChatController extends Controller
 {
@@ -87,8 +89,9 @@ class ChatController extends Controller
         // Security authorization check
         $this->authorizeRoomAccess($room, $user);
 
-        // Mark incoming messages as seen
+        // Mark incoming messages as seen & update current user heartbeat timestamp
         $this->chatService->markAsSeen($room, $user);
+        Cache::put('user-last-seen-'.$user->id, now(), now()->addMinutes(10));
 
         $query = ChatMessage::with('sender')
             ->where('chat_room_id', $room->id);
@@ -115,16 +118,38 @@ class ChatController extends Controller
 
         // Determine if partner is typing (typing status updated within last 6 seconds)
         $isPartnerTyping = false;
-        if ($user->patient && $room->patient_id === $user->patient->id) {
+        $partnerUser = null;
+
+        if ($user->patient && (int) $room->patient_id === (int) $user->patient->id) {
             $isPartnerTyping = $room->doctor_typing_at && $room->doctor_typing_at->diffInSeconds(now()) < 6;
-        } elseif ($user->doctor && $room->doctor_id === $user->doctor->id) {
+            $partnerUser = $room->doctor?->user;
+        } elseif ($user->doctor && (int) $room->doctor_id === (int) $user->doctor->id) {
             $isPartnerTyping = $room->patient_typing_at && $room->patient_typing_at->diffInSeconds(now()) < 6;
+            $partnerUser = $room->patient?->user;
+        }
+
+        $isPartnerOnline = false;
+        $partnerStatusText = 'Offline';
+
+        if ($partnerUser) {
+            $lastSeen = Cache::get('user-last-seen-'.$partnerUser->id);
+            if ($lastSeen) {
+                $secondsAgo = now()->diffInSeconds($lastSeen);
+                if ($secondsAgo < 90) {
+                    $isPartnerOnline = true;
+                    $partnerStatusText = 'Active Now';
+                } else {
+                    $partnerStatusText = 'Active '.$lastSeen->diffForHumans();
+                }
+            }
         }
 
         return response()->json([
             'success' => true,
             'messages' => $messages,
             'is_partner_typing' => $isPartnerTyping,
+            'is_partner_online' => $isPartnerOnline,
+            'partner_status_text' => $partnerStatusText,
         ]);
     }
 
@@ -167,6 +192,33 @@ class ChatController extends Controller
         $this->chatService->updateTypingStatus($room, $user);
 
         return response()->json(['success' => true]);
+    }
+
+    /**
+     * Download or view inline chat attachment (PDF, Images, Documents) securely.
+     */
+    public function downloadAttachment(ChatMessage $message, Request $request): mixed
+    {
+        $user = $request->user();
+        $room = $message->chatRoom;
+
+        $this->authorizeRoomAccess($room, $user);
+
+        if (! $message->attachment_path || ! Storage::disk('public')->exists($message->attachment_path)) {
+            abort(404, 'Attachment file not found.');
+        }
+
+        $filePath = Storage::disk('public')->path($message->attachment_path);
+        $mimeType = Storage::disk('public')->mimeType($message->attachment_path) ?? 'application/octet-stream';
+
+        if ($message->attachment_type === 'image' || str_contains($mimeType, 'pdf')) {
+            return response()->file($filePath, [
+                'Content-Type' => $mimeType,
+                'Content-Disposition' => 'inline; filename="'.($message->attachment_name ?? basename($filePath)).'"',
+            ]);
+        }
+
+        return Storage::disk('public')->download($message->attachment_path, $message->attachment_name);
     }
 
     /**

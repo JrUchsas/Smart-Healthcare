@@ -118,7 +118,7 @@
                 </div>
 
                 <div>
-                    <x-input-label for="consultation_fee" :value="__('Consultation Fee ($)')" />
+                    <x-input-label for="consultation_fee" :value="__('Consultation Fee (৳)')" />
                     <x-text-input id="consultation_fee" name="consultation_fee" type="number" step="0.01" class="mt-1 block w-full" :value="old('consultation_fee', $doctor?->consultation_fee)" />
                     <x-input-error class="mt-2" :messages="$errors->get('consultation_fee')" />
                 </div>

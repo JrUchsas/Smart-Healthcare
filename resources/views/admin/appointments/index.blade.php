@@ -28,6 +28,10 @@
                            class="btn btn-sm {{ $status === 'completed' ? 'btn-info text-white' : 'btn-outline-info' }}">
                             Completed <span class="badge bg-info-subtle text-info ms-1">{{ $stats['completed'] }}</span>
                         </a>
+                        <a href="{{ route('admin.appointments.index', ['status' => 'cancelled']) }}"
+                           class="btn btn-sm {{ $status === 'cancelled' ? 'btn-danger' : 'btn-outline-danger' }}">
+                            Cancelled <span class="badge bg-danger-subtle text-danger ms-1">{{ $stats['cancelled'] }}</span>
+                        </a>
                     </div>
 
                     {{-- Search Form --}}
@@ -115,7 +119,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="fw-bold text-dark">${{ number_format($apt->consultation_fee, 2) }}</div>
+                                        <div class="fw-bold text-dark">৳{{ number_format($apt->consultation_fee, 2) }}</div>
                                         @if($apt->payment_status === 'paid')
                                             <span class="badge bg-success-subtle text-success border">
                                                 <i class="bi bi-check-circle me-1"></i> Paid

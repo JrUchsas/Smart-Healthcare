@@ -38,8 +38,8 @@ class AdminAppointmentController extends Controller
             });
         }
 
-        $appointments = $query->orderBy('appointment_date', 'desc')
-            ->orderBy('id', 'desc')
+        $appointments = $query->orderBy('appointment_date', 'asc')
+            ->orderBy('id', 'asc')
             ->paginate(15)
             ->withQueryString();
 

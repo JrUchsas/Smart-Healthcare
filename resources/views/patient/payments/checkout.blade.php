@@ -32,7 +32,7 @@
                         <hr class="my-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="fw-bold">Total Consultation Fee Due:</span>
-                            <span class="fs-4 fw-bold text-success">${{ number_format($appointment->consultation_fee, 2) }}</span>
+                            <span class="fs-4 fw-bold text-success">৳{{ number_format($appointment->consultation_fee, 2) }}</span>
                         </div>
                     </div>
 
@@ -97,7 +97,7 @@
                                 <i class="bi bi-arrow-left me-1"></i> Back to Appointments
                             </a>
                             <button type="submit" class="btn btn-success btn-lg px-4" id="submit-pay-btn">
-                                <i class="bi bi-lock-fill me-1"></i> Pay ${{ number_format($appointment->consultation_fee, 2) }} Now
+                                <i class="bi bi-lock-fill me-1"></i> Pay ৳{{ number_format($appointment->consultation_fee, 2) }} Now
                             </button>
                         </div>
                     </form>

@@ -63,7 +63,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <span class="text-muted small text-uppercase">Monthly Earnings</span>
-                        <h3 class="fw-bold mb-0 mt-1">${{ number_format($stats['monthly_earnings'] ?? 0, 2) }}</h3>
+                        <h3 class="fw-bold mb-0 mt-1">৳{{ number_format($stats['monthly_earnings'] ?? 0, 2) }}</h3>
                     </div>
                     <div class="bg-warning bg-opacity-10 p-3 rounded-circle text-warning">
                         <i class="bi bi-wallet2 fs-4"></i>

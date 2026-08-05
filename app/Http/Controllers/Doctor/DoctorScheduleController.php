@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDoctorScheduleRequest;
 use App\Models\Doctor;
 use App\Models\DoctorSchedule;
+use App\Services\DoctorScheduleService;
 use App\Services\SlotGenerationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -23,6 +24,9 @@ class DoctorScheduleController extends Controller
      */
     public function index(Request $request): View
     {
+        // Auto-purge outdated schedules (< TODAY), refund money, and notify patients
+        DoctorScheduleService::purgeOutdatedSchedules();
+
         $user = $request->user();
         $isAdmin = $user->hasRole('Admin') || $user->user_type === 'admin';
         $isDoctor = $user->hasRole('Doctor') || $user->user_type === 'doctor';
@@ -31,7 +35,7 @@ class DoctorScheduleController extends Controller
             $schedules = DoctorSchedule::with(['doctor.user', 'slots' => function ($query) {
                 $query->orderBy('start_time', 'asc');
             }])
-                ->orderBy('schedule_date', 'desc')
+                ->orderBy('schedule_date', 'asc')
                 ->paginate(10);
         } else {
             $doctor = Doctor::firstOrCreate(['user_id' => $user->id]);
@@ -40,7 +44,7 @@ class DoctorScheduleController extends Controller
                 ->with(['slots' => function ($query) {
                     $query->orderBy('start_time', 'asc');
                 }])
-                ->orderBy('schedule_date', 'desc')
+                ->orderBy('schedule_date', 'asc')
                 ->paginate(10);
         }
 

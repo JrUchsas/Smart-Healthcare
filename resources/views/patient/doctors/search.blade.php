@@ -1,7 +1,7 @@
 @extends('layouts.dashboard-layout')
 
-@section('title', 'Doctor Directory')
-@section('page_title', 'Doctor Directory & Specialists')
+@section('title', 'Find Doctor')
+@section('page_title', 'Find Doctor & Specialists')
 
 @section('content')
 <div class="container-fluid px-0">
@@ -81,7 +81,7 @@
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <div>
                                     <small class="text-muted d-block">Consultation Fee</small>
-                                    <span class="fw-bold text-success fs-5">${{ number_format($doctor->consultation_fee, 2) }}</span>
+                                    <span class="fw-bold text-success fs-5">৳{{ number_format($doctor->consultation_fee, 2) }}</span>
                                 </div>
                                 <span class="badge bg-success-subtle text-success border">
                                     <i class="bi bi-circle-fill small me-1"></i> Available

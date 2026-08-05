@@ -18,7 +18,7 @@
                     <div class="bg-light p-3 rounded mb-4 border">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="badge bg-primary">Ref #: {{ $appointment->appointment_number }}</span>
-                            <span class="fw-bold text-success">${{ number_format($appointment->consultation_fee, 2) }}</span>
+                            <span class="fw-bold text-success">৳{{ number_format($appointment->consultation_fee, 2) }}</span>
                         </div>
                         <p class="mb-1"><strong>Doctor:</strong> {{ \Illuminate\Support\Str::startsWith($appointment->doctor?->user?->name, 'Dr.') ? $appointment->doctor?->user?->name : 'Dr. '.$appointment->doctor?->user?->name }} ({{ $appointment->doctor?->department?->name ?? 'General Medical' }})</p>
                         <p class="mb-0 small text-muted">

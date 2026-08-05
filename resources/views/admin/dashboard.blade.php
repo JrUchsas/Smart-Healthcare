@@ -54,7 +54,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <span class="text-muted small text-uppercase">Total Revenue</span>
-                            <h3 class="fw-bold mb-0 mt-1 text-dark">${{ number_format($stats['total_revenue'] ?? 0, 2) }}</h3>
+                            <h3 class="fw-bold mb-0 mt-1 text-dark">৳{{ number_format($stats['total_revenue'] ?? 0, 2) }}</h3>
                         </div>
                         <div class="bg-info bg-opacity-10 p-3 rounded-circle text-info">
                             <i class="bi bi-currency-dollar fs-4"></i>
@@ -114,7 +114,7 @@
                                             @endif
                                         </td>
                                         <td class="text-end pe-3">
-                                            <span class="fw-bold text-dark">${{ number_format($apt->consultation_fee, 2) }}</span>
+                                            <span class="fw-bold text-dark">৳{{ number_format($apt->consultation_fee, 2) }}</span>
                                             @if($apt->payment_status === 'paid')
                                                 <span class="badge bg-success-subtle text-success border ms-1"><i class="bi bi-check-circle me-1"></i> Paid</span>
                                             @else

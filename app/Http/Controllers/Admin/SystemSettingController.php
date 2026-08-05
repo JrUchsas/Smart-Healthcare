@@ -26,7 +26,7 @@ class SystemSettingController extends Controller
             'hospital_address' => SystemSetting::get('hospital_address', '742 Evergreen Medical Parkway, Suite 400, New York, NY 10001'),
 
             // Financial & Billing
-            'currency_symbol' => SystemSetting::get('currency_symbol', '$'),
+            'currency_symbol' => SystemSetting::get('currency_symbol', '৳'),
             'tax_percentage' => SystemSetting::get('tax_percentage', '0'),
             'default_consultation_fee' => SystemSetting::get('default_consultation_fee', '100.00'),
             'payment_mode' => SystemSetting::get('payment_mode', 'sandbox'),

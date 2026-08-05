@@ -158,7 +158,22 @@
                         <small class="text-muted d-none d-sm-inline">Welcome back, {{ auth()->user()->name }}</small>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="d-flex align-items-center gap-2">
+                        @if(!auth()->user()->hasRole('Admin') && auth()->user()->user_type !== 'admin')
+                            @php
+                                $unreadNotificationsCount = \App\Models\Notification::where('user_id', auth()->id())->where('is_read', false)->count();
+                            @endphp
+                            <a href="{{ route('notifications.index') }}" class="btn btn-white bg-white border position-relative shadow-sm py-2 px-3" title="View Notifications">
+                                <i class="bi bi-bell fs-5 text-secondary"></i>
+                                @if($unreadNotificationsCount > 0)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
+                                        {{ $unreadNotificationsCount }}
+                                    </span>
+                                @endif
+                            </a>
+                        @endif
+
+                        <div class="dropdown">
                         <button class="btn btn-white bg-white border dropdown-toggle d-flex align-items-center shadow-sm py-2 px-3" type="button" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle fs-5 me-2 text-primary"></i>
                             <span class="fw-semibold text-dark me-2">{{ auth()->user()->name }}</span>

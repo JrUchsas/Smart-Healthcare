@@ -60,7 +60,7 @@
                         </dd>
 
                         <dt class="col-sm-5 text-muted">Consultation Fee</dt>
-                        <dd class="col-sm-7 fw-bold text-success">${{ number_format($appointment->consultation_fee, 2) }}</dd>
+                        <dd class="col-sm-7 fw-bold text-success">৳{{ number_format($appointment->consultation_fee, 2) }}</dd>
 
                         <dt class="col-sm-5 text-muted">Payment Status</dt>
                         <dd class="col-sm-7">

@@ -61,19 +61,19 @@
                                         <strong>Medical Consultation Fee</strong>
                                         <div class="small text-muted">Specialist doctor consultation and time slot reservation</div>
                                     </td>
-                                    <td class="text-end fw-bold">${{ number_format($invoice->subtotal_amount, 2) }}</td>
+                                    <td class="text-end fw-bold">৳{{ number_format($invoice->subtotal_amount, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td class="text-end fw-bold">Subtotal:</td>
-                                    <td class="text-end fw-bold">${{ number_format($invoice->subtotal_amount, 2) }}</td>
+                                    <td class="text-end fw-bold">৳{{ number_format($invoice->subtotal_amount, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td class="text-end fw-bold">Tax & Service Charges:</td>
-                                    <td class="text-end fw-bold">${{ number_format($invoice->tax_amount, 2) }}</td>
+                                    <td class="text-end fw-bold">৳{{ number_format($invoice->tax_amount, 2) }}</td>
                                 </tr>
                                 <tr class="table-success">
                                     <td class="text-end fs-5 fw-bold text-success">Total Amount Paid:</td>
-                                    <td class="text-end fs-5 fw-bold text-success">${{ number_format($invoice->total_amount, 2) }}</td>
+                                    <td class="text-end fs-5 fw-bold text-success">৳{{ number_format($invoice->total_amount, 2) }}</td>
                                 </tr>
                             </tbody>
                         </table>

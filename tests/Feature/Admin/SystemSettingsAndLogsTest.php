@@ -38,7 +38,7 @@ test('admin can access and update system settings', function () {
             'contact_phone' => '+880 1800-555019',
             'emergency_hotline' => '+880 1611-999999',
             'hospital_address' => '100 Medical Plaza, NY',
-            'currency_symbol' => '$',
+            'currency_symbol' => '৳',
             'tax_percentage' => 5.50,
             'default_consultation_fee' => 120.00,
             'payment_mode' => 'sandbox',

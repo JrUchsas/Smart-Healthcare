@@ -33,7 +33,7 @@
 
                     <div class="mt-4 p-3 bg-success-subtle border border-success-subtle rounded">
                         <small class="text-success fw-semibold d-block">Consultation Fee</small>
-                        <span class="fs-4 fw-bold text-success">${{ number_format($doctor->consultation_fee, 2) }}</span>
+                        <span class="fs-4 fw-bold text-success">৳{{ number_format($doctor->consultation_fee, 2) }}</span>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
                             <div class="d-flex justify-content-end gap-2">
                                 <a href="{{ route('patient.doctors.search') }}" class="btn btn-light">Cancel</a>
                                 <button type="submit" class="btn btn-success px-4" id="submit-booking-btn">
-                                    <i class="bi bi-check2-circle me-1"></i> Confirm Booking (${{ number_format($doctor->consultation_fee, 2) }})
+                                    <i class="bi bi-check2-circle me-1"></i> Confirm Booking (৳{{ number_format($doctor->consultation_fee, 2) }})
                                 </button>
                             </div>
                         </form>
@@ -134,7 +134,7 @@
                 var slotDate = selectedRadio.data('date');
                 var slotTime = selectedRadio.data('time');
                 var doctorName = "{{ \Illuminate\Support\Str::startsWith($doctor->user?->name, 'Dr.') ? $doctor->user?->name : 'Dr. '.$doctor->user?->name }}";
-                var fee = "${{ number_format($doctor->consultation_fee, 2) }}";
+                var fee = "৳{{ number_format($doctor->consultation_fee, 2) }}";
 
                 Swal.fire({
                     title: 'Confirm Appointment Booking?',

@@ -63,7 +63,7 @@
                                         <strong>{{ $apt->appointment_date?->format('d M Y') ?? 'N/A' }}</strong>
                                     </td>
                                     <td>
-                                        <span class="fw-bold text-success">${{ number_format($apt->consultation_fee, 2) }}</span>
+                                        <span class="fw-bold text-success">৳{{ number_format($apt->consultation_fee, 2) }}</span>
                                         @if($apt->payment_status === 'paid')
                                             <span class="badge bg-success-subtle text-success border d-block mt-1">
                                                 <i class="bi bi-check-circle me-1"></i> Paid

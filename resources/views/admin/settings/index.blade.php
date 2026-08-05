@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="col-md-3">
-                        <label for="default_consultation_fee" class="form-label fw-semibold">Default Consultation Fee ($)</label>
+                        <label for="default_consultation_fee" class="form-label fw-semibold">Default Consultation Fee (৳)</label>
                         <input type="number" step="0.01" id="default_consultation_fee" name="default_consultation_fee" value="{{ old('default_consultation_fee', $settings['default_consultation_fee']) }}" class="form-control @error('default_consultation_fee') is-invalid @enderror" required>
                         @error('default_consultation_fee')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>

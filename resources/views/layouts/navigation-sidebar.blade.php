@@ -127,7 +127,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('patient.doctors.*') || request()->routeIs('patient.appointments.create') ? 'active' : '' }}" href="{{ route('patient.doctors.search') }}">
-            <i class="bi bi-person-lines-fill me-2"></i> Doctor Directory
+            <i class="bi bi-person-lines-fill me-2"></i> Find Doctor
         </a>
     </li>
     <li class="nav-item">

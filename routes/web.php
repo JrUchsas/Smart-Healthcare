@@ -92,6 +92,7 @@ Route::middleware(['auth', 'verified'])->prefix('chat')->name('chat.')->group(fu
     Route::get('/room/{room}/messages', [ChatController::class, 'getMessages'])->name('messages');
     Route::post('/room/{room}/send', [ChatController::class, 'sendMessage'])->name('send');
     Route::post('/room/{room}/typing', [ChatController::class, 'typing'])->name('typing');
+    Route::get('/messages/{message}/attachment', [ChatController::class, 'downloadAttachment'])->name('attachment');
 });
 
 use App\Http\Controllers\Doctor\DoctorCompletedConsultationsController;
@@ -112,6 +113,7 @@ Route::middleware(['auth', 'role:Doctor'])->prefix('doctor')->name('doctor.')->g
     Route::get('/completed-consultations', [DoctorCompletedConsultationsController::class, 'index'])->name('consultations.completed');
 });
 
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Patient\AppointmentBookingController;
 use App\Http\Controllers\Patient\DoctorSearchController;
 use App\Http\Controllers\Patient\PatientAppointmentController;
@@ -143,6 +145,10 @@ Route::middleware(['auth', 'role:Patient'])->prefix('patient')->name('patient.')
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::delete('/notifications/clear', [NotificationController::class, 'clearAll'])->name('notifications.clear');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

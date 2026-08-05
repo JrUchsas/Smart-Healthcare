@@ -15,7 +15,7 @@
                         <i class="bi bi-currency-dollar fs-4"></i>
                     </div>
                     <div>
-                        <div class="fs-3 fw-bold lh-1">${{ number_format($stats['total_revenue'], 2) }}</div>
+                        <div class="fs-3 fw-bold lh-1">৳{{ number_format($stats['total_revenue'], 2) }}</div>
                         <small class="opacity-75">Total Gross Revenue</small>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         <i class="bi bi-calendar-check fs-4"></i>
                     </div>
                     <div>
-                        <div class="fs-3 fw-bold lh-1">${{ number_format($stats['monthly_revenue'], 2) }}</div>
+                        <div class="fs-3 fw-bold lh-1">৳{{ number_format($stats['monthly_revenue'], 2) }}</div>
                         <small class="opacity-75">Monthly Revenue ({{ \Carbon\Carbon::parse($month.'-01')->format('M Y') }})</small>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                         <i class="bi bi-clock-history fs-4"></i>
                     </div>
                     <div>
-                        <div class="fs-3 fw-bold lh-1">${{ number_format($stats['today_revenue'], 2) }}</div>
+                        <div class="fs-3 fw-bold lh-1">৳{{ number_format($stats['today_revenue'], 2) }}</div>
                         <small class="opacity-75">Today's Revenue</small>
                     </div>
                 </div>
@@ -121,8 +121,8 @@
                                 </td>
                                 <td><span class="badge bg-light text-dark border">{{ $dept->doctors_count }} Doctors</span></td>
                                 <td><span class="badge bg-primary-subtle text-primary border">{{ $dept->paid_appointments_count }} Consultations</span></td>
-                                <td class="fw-bold text-primary">${{ number_format($dept->monthly_revenue, 2) }}</td>
-                                <td class="text-end pe-4 fw-bold text-success">${{ number_format($dept->total_revenue, 2) }}</td>
+                                <td class="fw-bold text-primary">৳{{ number_format($dept->monthly_revenue, 2) }}</td>
+                                <td class="text-end pe-4 fw-bold text-success">৳{{ number_format($dept->total_revenue, 2) }}</td>
                             </tr>
                         @empty
                             <tr>
@@ -192,7 +192,7 @@
                                         </small>
                                     </td>
                                     <td class="text-end pe-4">
-                                        <span class="fw-bold text-success fs-6">${{ number_format($inv->total_amount, 2) }}</span>
+                                        <span class="fw-bold text-success fs-6">৳{{ number_format($inv->total_amount, 2) }}</span>
                                     </td>
                                 </tr>
                             @endforeach

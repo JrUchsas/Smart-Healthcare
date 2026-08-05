@@ -31,9 +31,6 @@
                 {{ $slot }}
             </div>
 
-            <div class="text-center text-xs text-slate-400 py-2">
-                &copy; {{ date('Y') }} Smart Healthcare System. All rights reserved.
-            </div>
         </div>
     </body>
 </html>

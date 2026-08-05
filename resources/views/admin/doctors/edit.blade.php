@@ -70,9 +70,9 @@
 
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label for="consultation_fee" class="form-label fw-semibold">Consultation Fee ($) <span class="text-danger">*</span></label>
+                                <label for="consultation_fee" class="form-label fw-semibold">Consultation Fee (৳) <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <span class="input-group-text">$</span>
+                                    <span class="input-group-text">৳</span>
                                     <input type="number" step="0.01" name="consultation_fee" id="consultation_fee" class="form-control @error('consultation_fee') is-invalid @enderror" value="{{ old('consultation_fee', $doctor->consultation_fee) }}" required>
                                 </div>
                                 @error('consultation_fee')

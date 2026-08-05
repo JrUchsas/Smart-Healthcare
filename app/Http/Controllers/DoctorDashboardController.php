@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Doctor;
+use App\Services\DoctorScheduleService;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -14,6 +16,9 @@ class DoctorDashboardController extends Controller
      */
     public function index(Request $request): View
     {
+        // Auto-purge outdated schedules (< TODAY), refund money, and notify patients
+        DoctorScheduleService::purgeOutdatedSchedules();
+
         $user = $request->user();
         $doctor = Doctor::firstOrCreate(['user_id' => $user->id]);
 
@@ -67,8 +72,8 @@ class DoctorDashboardController extends Controller
             ->map(function ($sched) {
                 $totalSlots = $sched->slots->count();
                 $bookedSlots = $sched->slots->where('is_booked', true)->count();
-                $startTime = \Carbon\Carbon::parse($sched->start_time)->format('h:i A');
-                $endTime = \Carbon\Carbon::parse($sched->end_time)->format('h:i A');
+                $startTime = Carbon::parse($sched->start_time)->format('h:i A');
+                $endTime = Carbon::parse($sched->end_time)->format('h:i A');
 
                 return [
                     'id' => $sched->id,

@@ -227,6 +227,14 @@
                             } else {
                                 $('#typing-indicator').addClass('d-none');
                             }
+
+                            // Update partner real-time Active Now status
+                            if (response.partner_status_text) {
+                                var dotClass = response.is_partner_online ? 'text-success' : 'text-secondary';
+                                $('#partner-status-text').html(
+                                    `<i class="bi bi-circle-fill ${dotClass} me-1 extra-small" style="font-size:0.6rem;"></i> ${partnerSubtitle} &bull; ${response.partner_status_text}`
+                                );
+                            }
                         }
                     },
                     complete: function () {

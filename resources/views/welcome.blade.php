@@ -32,18 +32,6 @@
             font-weight: 800;
             letter-spacing: -0.5px;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 1.25rem;
-            transition: all 0.3s ease;
-        }
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-4px);
-        }
         .btn-gradient {
             background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
             color: #ffffff;
@@ -64,7 +52,7 @@
 <body>
 
     <div class="full-screen-wrapper">
-        {{-- Navbar Header --}}
+        {{-- Top Navbar Header --}}
         <nav class="navbar navbar-expand-lg navbar-dark py-3 px-3 px-md-5 border-bottom border-white border-opacity-10">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
@@ -87,7 +75,7 @@
                                 </a>
                                 @if (Route::has('register'))
                                     <a href="{{ route('register') }}" class="btn btn-gradient px-4 rounded-pill">
-                                        <i class="bi bi-person-plus me-1"></i> Patient Register
+                                        <i class="bi bi-person-plus me-1"></i> Register
                                     </a>
                                 @endif
                             @endauth
@@ -99,58 +87,34 @@
 
         {{-- Hero Body Content --}}
         <div class="container my-auto py-5">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-7 text-center text-lg-start">
-                    <span class="badge bg-info bg-opacity-20 text-info border border-info mb-3 px-3 py-2 rounded-pill">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-10 col-xl-9">
+                    {{-- High-visibility pill badge --}}
+                    <span class="badge bg-info text-dark fw-bold mb-3 px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.9rem;">
                         <i class="bi bi-shield-check me-1"></i> Full-Service Digital Hospital & Telehealth Portal
                     </span>
+
                     <h1 class="display-4 fw-extrabold mb-3 text-white">Smart Healthcare & Online Doctor Appointment System</h1>
-                    <p class="lead text-light opacity-75 mb-4">
+
+                    <p class="lead text-light opacity-75 mb-4 mx-auto" style="max-width: 800px;">
                         Connect with top medical specialists, manage digital health profiles, schedule atomic online appointments, receive digital PDF prescriptions, and chat live with healthcare professionals.
                     </p>
-                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+
+                    <div class="d-flex justify-content-center gap-3">
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="btn btn-gradient btn-lg px-4 rounded-pill shadow">
+                            <a href="{{ url('/dashboard') }}" class="btn btn-gradient btn-lg px-5 rounded-pill shadow">
                                 <i class="bi bi-speedometer2 me-2"></i> Go to Dashboard
                             </a>
                         @else
-                            <a href="{{ route('register') }}" class="btn btn-gradient btn-lg px-4 rounded-pill shadow">
+                            <a href="{{ route('register') }}" class="btn btn-gradient btn-lg px-5 rounded-pill shadow">
                                 <i class="bi bi-calendar-check me-2"></i> Book Appointment Now
                             </a>
-                            <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg px-4 rounded-pill">
-                                <i class="bi bi-box-arrow-in-right me-2"></i> User Sign In
-                            </a>
                         @endauth
-                    </div>
-                </div>
-
-                <div class="col-lg-5">
-                    <div class="glass-card p-4 p-md-5 text-center shadow-lg">
-                        <div class="mb-3">
-                            <i class="bi bi-hospital text-info display-1"></i>
-                        </div>
-                        <h3 class="text-white fw-bold mb-2">24/7 Medical Access</h3>
-                        <p class="text-light opacity-75 small mb-4">Complete digital healthcare workflow for Patients, Doctors, and Hospital Administrators.</p>
-
-                        <div class="d-grid gap-2">
-                            <a href="{{ route('login') }}" class="btn btn-light btn-sm fw-semibold rounded-pill py-2">
-                                <i class="bi bi-person-lock me-1"></i> Sign In to Account
-                            </a>
-                            <a href="{{ route('register.doctor') }}" class="btn btn-outline-info btn-sm rounded-pill py-2 text-white">
-                                <i class="bi bi-person-badge me-1"></i> Register as Doctor
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        {{-- Footer --}}
-        <footer class="py-3 text-center text-light">
-            <div class="container">
-                <small class="opacity-75">&copy; {{ date('Y') }} Smart Healthcare Management System. All rights reserved.</small>
-            </div>
-        </footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
