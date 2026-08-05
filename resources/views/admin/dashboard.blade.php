@@ -81,9 +81,9 @@
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th class="ps-3">Ref #</th>
-                                    <th>Patient</th>
+                                    <th class="ps-3">Patient</th>
                                     <th>Doctor</th>
+                                    <th>Date & Time</th>
                                     <th>Status</th>
                                     <th class="text-end pe-3">Fee & Payment</th>
                                 </tr>
@@ -92,23 +92,26 @@
                                 @forelse($recentAppointments as $apt)
                                     <tr>
                                         <td class="ps-3">
-                                            <a href="{{ route('admin.appointments.show', $apt) }}" class="font-monospace fw-bold text-primary text-decoration-none">
-                                                {{ $apt->appointment_number }}
+                                            <a href="{{ route('admin.appointments.show', $apt) }}" class="fw-semibold text-dark text-decoration-none hover-primary">
+                                                {{ $apt->patient?->user?->name ?? 'Patient' }}
                                             </a>
-                                        </td>
-                                        <td>
-                                            <div class="fw-semibold text-dark">{{ $apt->patient?->user?->name ?? 'Patient' }}</div>
-                                            <small class="text-muted">{{ $apt->patient?->user?->email }}</small>
+                                            <div class="small text-muted">{{ $apt->patient?->user?->email }}</div>
                                         </td>
                                         <td>
                                             <div class="fw-semibold text-dark">{{ \Illuminate\Support\Str::startsWith($apt->doctor?->user?->name, 'Dr.') ? $apt->doctor?->user?->name : 'Dr. '.$apt->doctor?->user?->name }}</div>
                                             <small class="text-muted">{{ $apt->doctor?->department?->name ?? 'Specialist' }}</small>
                                         </td>
                                         <td>
+                                            <div class="fw-semibold text-dark"><i class="bi bi-calendar-event me-1 text-primary"></i>{{ $apt->appointment_date ? \Carbon\Carbon::parse($apt->appointment_date)->format('d M Y') : '' }}</div>
+                                            <small class="text-muted">{{ $apt->slot?->start_time ? \Carbon\Carbon::parse($apt->slot->start_time)->format('h:i A') : 'Scheduled' }}</small>
+                                        </td>
+                                        <td>
                                             @if($apt->status === 'completed')
                                                 <span class="badge bg-info-subtle text-info border">Completed</span>
                                             @elseif($apt->status === 'confirmed')
                                                 <span class="badge bg-success-subtle text-success border">Confirmed</span>
+                                            @elseif($apt->status === 'cancelled')
+                                                <span class="badge bg-danger-subtle text-danger border">Cancelled</span>
                                             @else
                                                 <span class="badge bg-warning-subtle text-dark border">Pending</span>
                                             @endif
@@ -117,6 +120,8 @@
                                             <span class="fw-bold text-dark">৳{{ number_format($apt->consultation_fee, 2) }}</span>
                                             @if($apt->payment_status === 'paid')
                                                 <span class="badge bg-success-subtle text-success border ms-1"><i class="bi bi-check-circle me-1"></i> Paid</span>
+                                            @elseif($apt->payment_status === 'refunded')
+                                                <span class="badge bg-info-subtle text-info border ms-1"><i class="bi bi-arrow-counterclockwise me-1"></i> Refunded</span>
                                             @else
                                                 <span class="badge bg-warning-subtle text-dark border ms-1"><i class="bi bi-hourglass-split me-1"></i> Unpaid</span>
                                             @endif

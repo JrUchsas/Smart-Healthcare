@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Services\DoctorScheduleService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,9 @@ class AdminDashboardController extends Controller
      */
     public function index(Request $request): View
     {
+        // Auto-purge outdated schedules (< TODAY), refund money, and update cancelled status
+        DoctorScheduleService::purgeOutdatedSchedules();
+
         $stats = [
             'total_departments' => Department::count(),
             'total_doctors' => Doctor::count(),

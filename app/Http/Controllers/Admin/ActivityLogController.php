@@ -32,7 +32,7 @@ class ActivityLogController extends Controller
             $query->where('action', $action);
         }
 
-        $logs = $query->orderBy('id', 'asc')->paginate(15)->withQueryString();
+        $logs = $query->orderBy('id', 'desc')->paginate(15)->withQueryString();
 
         $actions = ActivityLog::distinct('action')->pluck('action');
 
